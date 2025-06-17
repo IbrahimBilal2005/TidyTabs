@@ -1,4 +1,5 @@
 const OPENAI_API_KEY = "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";
+
 function setStatus(message, isLoading = false) {
   const statusDiv = document.getElementById("status");
   statusDiv.textContent = message;
