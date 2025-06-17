@@ -54,21 +54,36 @@ function buildPrompt(titles) {
   return `
 You are given a list of browser tab titles.
 
-Your job is to group them into meaningful categories **based on what each tab is about**, not just what the title literally says.
+Your job is to group them into **high-level categories** based on the **intent or purpose behind each tab**, not just the literal text.
 
-Special rules:
-- If a title includes "Google Search", classify it by the topic that was searched (e.g., "netflix - Google Search" → "Entertainment").
-- If the title is exactly "New Tab", group it into a category called "New Tabs".
-- Avoid a category called “Search” — do not group based on the presence of “Google Search”.
+### Rules:
 
-Return only a JSON object where:
-- Each key is a category name (like "Entertainment", "Education", "Security", etc.)
-- Each value is an array of tab titles from the list
+1. Group tab titles into clear, general categories such as:
+    - "Work", "Research", "Entertainment", "Education", "Shopping", "Social Media", "News", "Email", "Documentation", "Productivity", "Finance", "Travel", "Technology", "Weather", "Health", etc.
+    - Do not create overly specific or uncommon category names.
 
-Do not return anything else.
+2. **NEVER** create a category named "Search" or any variation like "Google Search", "Search Results", etc. Infer the **actual topic being searched** and group accordingly.
+    - Example: "netflix release dates - Google Search" → "Entertainment"
+    - Example: "weather in Toronto - Google Search" → "Weather"
+    - Example: "best food near me - Google Search" → "Food"
+    - Example: "Burger King - Google Search" → "Food" (not "Entertainment" or "Other")
 
-Here are the titles:
-${titles.join('\n')}
+4. If the title is exactly "New Tab", assign it to the category "New Tabs".
+
+5. Assign **every tab** to a category. Before creating new categories, check if an existing one fits.
+
+6. If a title could fit **multiple categories**, choose the one most directly related to its primary purpose.  
+    - Example, "YouTube" may sometimes be used for education, but unless the video title is educational, categorize it as "Entertainment".
+    - Example: "Health risks of fast food - Google Search" → "Health" (not "Food" or "Other")
+
+Return your response as a **valid JSON object only** (no explanation or text before or after).  
+- Keys: category names (strings)  
+- Values: arrays of tab titles (strings, exactly as provided)
+
+Here’s the list of tab titles:
+
+${JSON.stringify(titles, null, 2)}
+
 `.trim();
 }
 
@@ -80,7 +95,7 @@ async function callGPT(prompt) {
       "Authorization": `Bearer ${OPENAI_API_KEY}`
     },
     body: JSON.stringify({
-      model: "gpt-4",
+      model: "gpt-3.5-turbo",
       messages: [
         { role: "system", content: "You are a helpful assistant that organizes browser tabs by purpose." },
         { role: "user", content: prompt }
