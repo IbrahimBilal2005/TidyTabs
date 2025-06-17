@@ -36,18 +36,32 @@ function typeWriterEffect(message, targetId, speed = 40) {
   });
 }
 
-async function animateLoadingMessages(messages, cancelRef) {
+// gpt-4 version 
+
+// async function animateLoadingMessages(messages, cancelRef) {
+//   const element = document.getElementById("status");
+//   for (let i = 0; i < messages.length; i++) {
+//     if (cancelRef.cancelled) return;
+//     await typeWriterEffect(messages[i], "status", 40);
+//     await new Promise(res => setTimeout(res, 600));
+//   }
+//   if (!cancelRef.cancelled) {
+//     element.className = "loading";
+//     element.textContent = "Almost done";
+//   }
+// }
+
+// gpt-3.5 version
+
+async function animateLoadingMessages(cancelRef) {
   const element = document.getElementById("status");
-  for (let i = 0; i < messages.length; i++) {
-    if (cancelRef.cancelled) return;
-    await typeWriterEffect(messages[i], "status", 40);
-    await new Promise(res => setTimeout(res, 600));
-  }
+  if (cancelRef.cancelled) return;
+  await typeWriterEffect("Almost done", "status", 40);
   if (!cancelRef.cancelled) {
     element.className = "loading";
-    element.textContent = "Almost done";
   }
 }
+
 
 // === Prompt & AI ===
 function buildPrompt(titles) {
@@ -143,7 +157,11 @@ document.getElementById("organizeButton").addEventListener("click", async () => 
     const titles = tabs.map(tab => tab.title);
     const cancelRef = { cancelled: false };
 
-    animateLoadingMessages(LOADING_MESSAGES, cancelRef);
+    // gpt-4 version
+    // animateLoadingMessages(LOADING_MESSAGES, cancelRef);
+
+    // gpt-3.5 version
+    animateLoadingMessages(cancelRef);
 
     try {
       const prompt = buildPrompt(titles);
@@ -162,7 +180,7 @@ document.getElementById("organizeButton").addEventListener("click", async () => 
       }
 
       groupTabsByGPT(parsed, tabs);
-      setStatus("All tabs neatly grouped ✅");
+      setStatus("All finshed!");
     } catch (error) {
       cancelRef.cancelled = true;
       console.error("Error during GPT tab organization:", error);
@@ -170,3 +188,4 @@ document.getElementById("organizeButton").addEventListener("click", async () => 
     }
   });
 });
+
