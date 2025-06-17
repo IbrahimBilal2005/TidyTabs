@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TidyTabs AI</title>
+  <style>
+    body {
+      background-color: #1e1e1e;
+      color: #ffffff;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 15px;
+      width: 300px;
+    }
+
+    h2 {
+      margin-top: 0;
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 20px;
+      text-align: center;
+    }
+
+    #organizeButton {
+      background-color: #64748b;
+      color: white;
+      font-weight: 500;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 15px;
+      transition: background-color 0.3s ease;
+    }
+
+    #organizeButton:hover {
+      background-color: #10b981;
+    }
+
+    #status {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #d0d0d0;
+      white-space: pre-wrap;
+    }
+
+    .loading::after {
+      content: '...';
+      animation: dots 1.2s steps(3, end) infinite;
+    }
+
+    @keyframes dots {
+      0%   { content: ''; }
+      33%  { content: '.'; }
+      66%  { content: '..'; }
+      100% { content: '...'; }
+    }
+  </style>
+</head>
+<body>
+  <h2>TidyTabs AI</h2>
+  <button id="organizeButton">Organize My Tabs</button>
+  <div id="status" class=""></div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
