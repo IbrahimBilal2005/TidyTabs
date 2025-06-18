@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "GPT Tab Organizer",
+  "name": "TidyTabs Ai",
   "version": "1.0",
-  "description": "Organize your tabs using GPT to understand and group them by category.",
+  "description": "Automatically organize your tabs into groups using AI.",
   "permissions": [
     "tabs",
     "tabGroups",
@@ -10,7 +10,18 @@
     "activeTab"
   ],
   "host_permissions": ["<all_urls>"],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
   "action": {
-    "default_popup": "popup.html"
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_title": "TidyTabs AI"
   }
 }

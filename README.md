@@ -3,9 +3,8 @@
 
 You're not alone. Between research, YouTube, email, and five versions of “how to focus better,” it’s easy for your browser to become a digital jungle.
 
-**Tab Organizer** is a Chrome extension powered by GPT-4 that declutters your browser in one click.  
-It scans your open tabs and intelligently groups them by topic—like **Productivity**, **Entertainment**, **Beach Plan**, and more—so you can breathe, focus, and actually find what you were looking for.
-
+**TidyTabs** is a Chrome extension powered by GPT-4 that declutters your tabs in one click.  
+It scans your open tabs, understands what each one is about, and automatically groups them by topic — like Work, Entertainment, Travel Plans, and more — right inside your browser.
 No more tab overload. No more chaos. A lot more oganization. 
 
 ---
