@@ -50,31 +50,31 @@ def build_prompt(titles: list[str]) -> str:
     return f"""
 You are given a list of browser tab titles.
 
-Your task is to group them into clear, high-level categories based on the **intent or purpose behind each tab**, not just the literal text of the title.
+Your task is to group them into categories based on the **actual purpose or intent** behind each tab — not the exact text.
 
-## 🧠 Categorization Rules:
+You must return a **valid JSON object only**, structured like this:
 
-1. Return only a **valid JSON object**.  
-   - **Keys**: Category names (e.g. "Work", "Entertainment", "Shopping")  
-   - **Values**: Arrays of tab titles (as-is from the list)
+{{
+  "Category 1": ["Title A", "Title B"],
+  "Category 2": ["Title C", "Title D"]
+}}
 
-2. Group tabs under general, meaningful categories such as:
+---
+
+### Strict Rules:
+
+1. Choose categories **only** from this approved list:
    - "Work", "Research", "Entertainment", "Education", "Shopping", "Social Media", "News", "Email", "Documentation", "Productivity", "Finance", "Travel", "Technology", "Weather", "Health", "Food", "New Tabs"
-   - Avoid overly niche or uncommon category names
 
-3. **NEVER** create a category called “Search” or any variation of it.
-   - If a title contains “Google Search”, **infer the true intent** and categorize accordingly:
-     - "netflix release dates - Google Search" → "Entertainment"
-     - "weather in Toronto - Google Search" → "Weather"
-     - "how to budget - Google Search" → "Finance"
-     - "best burgers near me - Google Search" → "Food"
+2. If a tab is **"New Tab"**, assign it to `"New Tabs"`.
 
-4. If the tab title is exactly **"New Tab"**, assign it to the category `"New Tabs"`.
+3. NEVER use categories like "Search", "Other", "Miscellaneous", or create new ones.
 
-5. Every tab must be assigned to a category.
-   - If a tab could fit multiple, choose the **most directly relevant** one.
+4. If a tab includes "Google Search", classify it by the actual topic searched:
+   - "weather in Paris - Google Search" → "Weather"
+   - "how to get a scholarship - Google Search" → "Education"
 
-6. Do not return anything except the **JSON object**.
+5. Each tab must be assigned to **exactly one** of the approved categories.
 
 ---
 
