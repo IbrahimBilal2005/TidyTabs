@@ -52,6 +52,6 @@ async def categorize_tabs(data: TabData):
 
 """ Builds the prompt for the OpenAI API using a base template and the provided titles."""
 def build_prompt(titles: list[str]) -> str:
-    with open("prompt_template.txt", "r") as f:
+    with open("prompt.txt", "r") as f:
         base_prompt = f.read()
     return base_prompt + "\n\n" + json.dumps(titles, indent=2)
