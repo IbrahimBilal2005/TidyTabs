@@ -5,9 +5,7 @@
   "description": "Automatically organize your tabs into groups using AI.",
   "permissions": [
     "tabs",
-    "tabGroups",
-    "scripting",
-    "activeTab"
+    "tabGroups"
   ],
   "host_permissions": ["<all_urls>"],
   "icons": {
