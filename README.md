@@ -55,21 +55,21 @@ To regroup after opening new tabs, just click the button again!
 
 If you're building, modifying, or testing the extension locally:
 
-1. Clone or download the repo
-2. Copy the example config to a real config file:
-   ```bash
-   cp config.example.js config.js
-   ```
-   Then insert your OpenAI API key into `config.js`.
+1. Clone or download the repo.
 
-3. Create a `.zip` file of all files and folders (not the outer folder itself)  
-   _or_ use **Load Unpacked** in Chrome:
+2. No API key setup is required — the extension communicates securely with a backend API (hosted via FastAPI on Render) which handles interactions with OpenAI.
+
+3. Start using or editing the extension code directly. You can load it into Chrome using **Load Unpacked**:
 
    - Go to `chrome://extensions/`
    - Enable **Developer Mode**
    - Click **Load unpacked**
    - Select your local extension folder
 
+4. If you need to change the backend URL (e.g., if you're self-hosting), update the API base URL in `config.js`:
+   ```js
+   // config.js
+   export const API_BASE_URL = "https://your-fastapi-endpoint.com"; // Change this if self-hosting
 ---
 
 ## 🔐 Privacy First
