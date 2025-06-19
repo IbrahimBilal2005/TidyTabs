@@ -21,9 +21,17 @@ document.getElementById("organizeButton").addEventListener("click", async () => 
       });
 
       const data = await response.json();
-      const groups = JSON.parse(data.categories);
 
-      await organizeTabs(tabs, groups);
+      let parsed;
+      try {
+        parsed = JSON.parse(data.categories);
+      } catch (e) {
+        console.error("❌ Failed to parse GPT response:\n", data.categories);
+        setStatus("❌ GPT returned invalid format. Try again.");
+        return;
+      }
+
+      await organizeTabs(tabs, parsed);
       setStatus("✅ Tabs organized successfully!");
     } catch (err) {
       console.error(err);
