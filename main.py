@@ -1,10 +1,10 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
-import json
 import os
 from openai import OpenAI
+import json
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
@@ -12,7 +12,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Later restrict to your extension origin
+    allow_origins=["*"],  # You can restrict this to your extension origin later
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -40,8 +40,9 @@ async def categorize_tabs(data: TabData):
             temperature=0.4,
         )
 
+        # Return the raw GPT content string
         content = response.choices[0].message.content.strip()
-        return JSONResponse(content=json.loads(content))
+        return { "categories": content }
 
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": str(e)})
@@ -66,7 +67,7 @@ You must return a **valid JSON object only**, structured like this:
 1. Choose categories **only** from this approved list:
    - "Work", "Research", "Entertainment", "Education", "Shopping", "Social Media", "News", "Email", "Documentation", "Productivity", "Finance", "Travel", "Technology", "Weather", "Health", "Food", "New Tabs"
 
-2. If a tab is **"New Tab"**, assign it to `"New Tabs"`.
+2. If a tab is **'New Tab'**, assign it to `"New Tabs"`.
 
 3. NEVER use categories like "Search", "Other", "Miscellaneous", or create new ones.
 
