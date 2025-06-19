@@ -42,7 +42,8 @@ async function organizeTabs(tabs, groups) {
       const groupId = await chrome.tabs.group({ tabIds });
       await chrome.tabGroups.update(groupId, {
         title: groupName,
-        color: getGroupColor(groupName)
+        color: getGroupColor(groupName),
+        collapsed: true
       });
     }
   }
