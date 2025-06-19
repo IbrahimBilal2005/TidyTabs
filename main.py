@@ -23,7 +23,7 @@ async def categorize_tabs(data: TabData):
     prompt = build_prompt(data.titles)
 
     response = openai.ChatCompletion.create(
-        model="gpt-4",
+        model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "You are a helpful assistant that categorizes browser tabs."},
             {"role": "user", "content": prompt}
