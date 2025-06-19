@@ -1,5 +1,18 @@
-# TidyTabs — Smart Tab Organizer for Chrome
-<img src="icons/icon128.png" alt="TidyTabs Logo" width="100" />
+<p align="center">
+  <img src="icons/icon128.png" alt="TidyTabs Logo" width="100"/>
+</p>
+
+<h1 align="center">🧠 TidyTabs — Smart Tab Organizer for Chrome</h1>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Chrome_Extension-%234285F4?style=for-the-badge&logo=google-chrome&logoColor=white"/>
+  <img src="https://img.shields.io/badge/JavaScript-%23F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"/>
+  <img src="https://img.shields.io/badge/FastAPI-%2300C7B7?style=for-the-badge&logo=fastapi&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Python-%233776AB?style=for-the-badge&logo=python&logoColor=white"/>
+  <img src="https://img.shields.io/badge/OpenAI_API-%236E57E0?style=for-the-badge&logo=openai&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Render_Deployment-%23000000?style=for-the-badge&logo=render&logoColor=white"/>
+</p>
+<br/>
 
 
 ### Ever have 27 tabs open and no idea why?
@@ -11,6 +24,7 @@ It scans your open tabs, understands what each one is about, and intelligently g
 
 No more tab overload. No more chaos. Just clean, color-coded clarity.
 
+<img src="demo_photos/before.png" alt="Before Photo" width="500" />     <img src="demo_photos/after.png" alt="After Photo" width="500" />
 ---
 
 ## ⚙️ How It Works
