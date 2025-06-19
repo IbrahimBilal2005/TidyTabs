@@ -27,11 +27,11 @@ def root():
     return {"status": "TidyTabs backend is live"}
 
 @app.post("/categorize")
-async def categorize_tabs(data: TabData):
+def categorize_tabs(data: TabData):
     prompt = build_prompt(data.titles)
 
     try:
-        response = await client.chat.completions.create( # Asynchronous call to OpenAI API
+        response = client.chat.completions.create( # Asynchronous call to OpenAI API
             model="gpt-4",
             messages=[
                 {
