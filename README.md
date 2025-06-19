@@ -1,4 +1,6 @@
-# 🧠 TidyTabs — Smart Tab Organizer for Chrome
+# TidyTabs — Smart Tab Organizer for Chrome
+<img src="icons/icon128.png" alt="TidyTabs Logo" width="100" />
+
 
 ### Ever have 27 tabs open and no idea why?
 
@@ -13,16 +15,16 @@ No more tab overload. No more chaos. Just clean, color-coded clarity.
 
 ## ⚙️ How It Works
 
-1. 🧐 **Understands your tabs with context**  
+1. ✅ **Understands your tabs with context**  
    GPT-4 doesn’t just scan for keywords — it infers the *actual purpose* of each tab.
 
-2. 🗂️ **Categorizes them like a pro**  
+2. ✅ **Categorizes them like a pro**  
    Tabs are grouped into smart categories like **Productivity**, **Entertainment**, and **Research** — no setup needed.
 
-3. 🌈 **Applies color-coded tab groups**  
+3. ✅ **Applies color-coded tab groups**  
    Chrome tab groups are created and color-coded for visual clarity and faster navigation.
 
-4. 🚀 **Done in seconds**  
+4. ✅ **Done in seconds**  
    All tabs are neatly grouped — instantly. You stay focused without lifting a finger.
 
 ---
