@@ -40,11 +40,9 @@ No more tab overload. No more chaos. Just clean, color-coded clarity.
 
 4. ✅ **Done in seconds**  
    All tabs are neatly grouped — instantly. You stay focused without lifting a finger.
-
 ---
 
 ## 🧭 How to Use
-
 
 ### 🌍 For Regular Users
 
@@ -58,31 +56,59 @@ No more tab overload. No more chaos. Just clean, color-coded clarity.
    - Read your open tab titles
    - Use GPT to interpret and group them
    - Automatically apply Chrome tab groups by category (like **Productivity**, **News**, **Entertainment**, etc.)
-
-### 🔁 Tip  
-To regroup after opening new tabs, just click the button again!
+   - 🔁 Tip: To regroup after opening new tabs, just click the button again!
 
 ---
 
 ### 🛠️ For Developers
 
-If you're building, modifying, or testing the extension locally:
+#### 1. Clone the Repository
 
-1. Clone or download the repo.
+```bash
+git clone https://github.com/IbrahimBilal2005/TidyTabs.git
+cd TidyTabs
+```
 
-2. No API key setup is required — the extension communicates securely with a backend API (hosted via FastAPI on Render) which handles interactions with OpenAI.
+- This repo contains both the Chrome extension and the FastAPI backend.
 
-3. Start using or editing the extension code directly. You can load it into Chrome using **Load Unpacked**:
+#### 2. Deploy the Backend to Render
 
-   - Go to `chrome://extensions/`
-   - Enable **Developer Mode**
-   - Click **Load unpacked**
-   - Select your local extension folder
+- Go to [https://render.com](https://render.com)
+- Click **"New Web Service"** and connect your GitHub repo
+- Set the following build and deploy settings:
+   - **Environment:** `Python 3`
+   - **Build Command:** `pip install -r requirements.txt`
+   - **Start Command:** `uvicorn main:app --host 0.0.0.0 --port 10000`
+- Under **Environment Variables**, add:
 
-4. If you need to change the backend URL (e.g., if you're self-hosting), update the API base URL in `config.js`:
-   ```js
-   // config.js
-   export const API_BASE_URL = "https://your-fastapi-endpoint.com"; // Change this if self-hosting
+   ```
+   OPENAI_API_KEY=your-openai-key-here
+   ```
+
+- Deploy the service — Render will give you a public URL like `https://tidytabs-ai.onrender.com`
+
+---
+
+#### 3. Configure the Extension
+
+In the root folder of this repo, create a file called `config.js`:
+
+```js
+// config.js
+export const BACKEND_URL = "https://your-render-url.onrender.com";
+```
+
+> ⚠️ This file is ignored in `.gitignore` to keep your setup private. You must create it manually.
+
+#### 4. Load the Extension in Chrome
+
+- Go to `chrome://extensions/`
+- Enable **Developer Mode** (top right)
+- Click **Load unpacked**
+- Select the extension folder (where `manifest.json` is located)
+
+✅ That’s it! Your extension will now communicate with your Render-hosted FastAPI backend, which securely talks to OpenAI
+
 ---
 
 ## 🔐 Privacy First
