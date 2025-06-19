@@ -22,10 +22,7 @@ No more tab overload. No more chaos. Just clean, color-coded clarity.
 3. 🌈 **Applies color-coded tab groups**  
    Chrome tab groups are created and color-coded for visual clarity and faster navigation.
 
-4. ⌨️ **Animated, human-friendly feedback**  
-   Instead of static loaders, you’ll see animated messages like “Analyzing tabs…” and “Grouping by topic…”
-
-5. 🚀 **Done in seconds**  
+4. 🚀 **Done in seconds**  
    All tabs are neatly grouped — instantly. You stay focused without lifting a finger.
 
 ---
