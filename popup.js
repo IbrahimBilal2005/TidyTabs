@@ -21,7 +21,7 @@ document.getElementById("organizeButton").addEventListener("click", async () => 
       const response = await fetch(`${BACKEND_URL}/categorize`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ titles }),
+        body: JSON.stringify({ titles }),  // Convert JS object to JSON string
       });
 
       if (!response.ok) {
@@ -32,31 +32,26 @@ document.getElementById("organizeButton").addEventListener("click", async () => 
       }
 
       const data = await response.json();
-      const parsed = data.categories; 
 
-      // Clear previous tab groups before organizing
-      await ungroupAllTabs();
+      let parsed;
+      try {
+        // data.categories is already a JSON object (not a string)
+        parsed = data.categories;
+      } catch (e) {
+        console.error("❌ Failed to read GPT response:", data.categories);
+        setStatus("❌ GPT returned invalid format. Try again.");
+        return;
+      }
 
       // Group the browser tabs based on GPT's parsed result
       await organizeTabs(tabs, parsed);
       setStatus("✅ Tabs organized successfully!");
     } catch (err) {
-      console.error("❌ Failed to organize tabs:", err);
+      console.error(err);
       setStatus("❌ Failed to organize tabs.");
     }
   });
 });
-
-// === Ungroup all grouped tabs before re-grouping ===
-async function ungroupAllTabs() {
-  const allTabs = await chrome.tabs.query({ currentWindow: true });
-  const groupIds = [...new Set(allTabs.map(tab => tab.groupId).filter(id => id !== -1))];
-
-  for (const groupId of groupIds) {
-    const groupedTabs = allTabs.filter(tab => tab.groupId === groupId).map(tab => tab.id);
-    await chrome.tabs.ungroup(groupedTabs);
-  }
-}
 
 // === Group the browser tabs using GPT categories ===
 async function organizeTabs(tabs, groups) {
@@ -65,12 +60,13 @@ async function organizeTabs(tabs, groups) {
       .filter(tab => titles.includes(tab.title))
       .map(tab => tab.id);
 
+    // Group them and assign color/title
     if (tabIds.length > 0) {
       const groupId = await chrome.tabs.group({ tabIds });
       await chrome.tabGroups.update(groupId, {
         title: groupName,
         color: getGroupColor(groupName),
-        collapsed: true,
+        collapsed: true // Start collapsed for a cleaner view
       });
     }
   }
@@ -80,8 +76,12 @@ async function organizeTabs(tabs, groups) {
 function getGroupColor(name) {
   const colors = ["blue", "red", "yellow", "green", "pink", "purple", "cyan", "orange"];
   let hash = 0;
+
+  // Generate a deterministic hash based on group name
   for (let i = 0; i < name.length; i++) {
     hash = name.charCodeAt(i) + ((hash << 5) - hash);
   }
+
+  // Map hash to one of the predefined colors
   return colors[Math.abs(hash) % colors.length];
 }

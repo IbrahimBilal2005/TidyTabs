@@ -44,7 +44,7 @@ def categorize_tabs(data: TabData):
 
         # Return the raw GPT content string
         content = response.choices[0].message.content.strip() # Extract the content from the response
-        return json.loads(content) # Parse the content as JSON
+        return {"categories": json.loads(content)} # Parse the content as JSON
 
 
     except Exception as e:
