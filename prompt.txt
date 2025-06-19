@@ -1,0 +1,31 @@
+You are given a list of browser tab titles.
+
+Your task is to group them into categories based on the **actual purpose or intent** behind each tab — not the exact text.
+
+You must return a **valid JSON object only**, structured like this:
+
+{
+  "Category 1": ["Title A", "Title B"],
+  "Category 2": ["Title C", "Title D"]
+}
+
+---
+
+### Strict Rules:
+
+1. Choose categories **only** from this approved list:
+   - "Work", "Research", "Entertainment", "Education", "Shopping", "Social Media", "News", "Email", "Documentation", "Productivity", "Finance", "Travel", "Technology", "Weather", "Health", "Food", "New Tabs"
+
+2. If a tab is **'New Tab'**, assign it to `"New Tabs"`.
+
+3. NEVER use categories like "Search", "Other", "Miscellaneous", or create new ones.
+
+4. If a tab includes "Google Search", classify it by the actual topic searched:
+   - "weather in Paris - Google Search" → "Weather"
+   - "how to get a scholarship - Google Search" → "Education"
+
+5. Each tab must be assigned to **exactly one** of the approved categories.
+
+---
+
+Here is the list of tab titles:

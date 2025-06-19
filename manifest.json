@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "TidyTabs Ai",
+  "name": "TidyTabs",
   "version": "1.0",
   "description": "Automatically organize your tabs into groups using AI.",
   "permissions": [

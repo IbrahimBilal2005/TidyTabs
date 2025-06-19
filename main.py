@@ -1,15 +1,16 @@
+import os
+import json
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
-import os
 from openai import OpenAI
-import json
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-
 app = FastAPI()
 
+# Middleware to handle CORS, allowing requests from any origin
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # You can restrict this to your extension origin later
@@ -17,6 +18,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Define the data model for the incoming request
 class TabData(BaseModel):
     titles: list[str]
 
@@ -29,7 +31,7 @@ async def categorize_tabs(data: TabData):
     prompt = build_prompt(data.titles)
 
     try:
-        response = await client.chat.completions.create(
+        response = await client.chat.completions.create( # Asynchronous call to OpenAI API
             model="gpt-4",
             messages=[
                 {
@@ -37,49 +39,18 @@ async def categorize_tabs(data: TabData):
                     "content": prompt
                 }
             ],
-            temperature=0.4,
+            temperature=0.4, # Lower temperature for more deterministic output
         )
 
         # Return the raw GPT content string
-        content = response.choices[0].message.content.strip()
+        content = response.choices[0].message.content.strip() # Extract the content from the response
         return { "categories": content }
 
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": str(e)})
 
+""" Builds the prompt for the OpenAI API using a base template and the provided titles."""
 def build_prompt(titles: list[str]) -> str:
-    return f"""
-You are given a list of browser tab titles.
-
-Your task is to group them into categories based on the **actual purpose or intent** behind each tab — not the exact text.
-
-You must return a **valid JSON object only**, structured like this:
-
-{{
-  "Category 1": ["Title A", "Title B"],
-  "Category 2": ["Title C", "Title D"]
-}}
-
----
-
-### Strict Rules:
-
-1. Choose categories **only** from this approved list:
-   - "Work", "Research", "Entertainment", "Education", "Shopping", "Social Media", "News", "Email", "Documentation", "Productivity", "Finance", "Travel", "Technology", "Weather", "Health", "Food", "New Tabs"
-
-2. If a tab is **'New Tab'**, assign it to `"New Tabs"`.
-
-3. NEVER use categories like "Search", "Other", "Miscellaneous", or create new ones.
-
-4. If a tab includes "Google Search", classify it by the actual topic searched:
-   - "weather in Paris - Google Search" → "Weather"
-   - "how to get a scholarship - Google Search" → "Education"
-
-5. Each tab must be assigned to **exactly one** of the approved categories.
-
----
-
-Here is the list of tab titles:
-
-{json.dumps(titles, indent=2)}
-""".strip()
+    with open("prompt_template.txt", "r") as f:
+        base_prompt = f.read()
+    return base_prompt + "\n\n" + json.dumps(titles, indent=2)
