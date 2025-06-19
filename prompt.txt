@@ -1,31 +1,23 @@
-You are given a list of browser tab titles.
+You are given a list of browser tab titles opened by a user.
 
-Your task is to group them into categories based on the **actual purpose or intent** behind each tab — not the exact text.
+Your task is to group them into meaningful high-level categories that reflect the purpose of each tab. Focus on what the user was trying to do — not the literal wording of the title.
 
-You must return a **valid JSON object only**, structured like this:
-
+Return only a valid JSON object in this format:
 {
-  "Category 1": ["Title A", "Title B"],
-  "Category 2": ["Title C", "Title D"]
+  "Category Name": ["Tab Title 1", "Tab Title 2", ...],
+  ...
 }
 
----
+Guidelines:
+- Make the category names short and clear (1–3 words), e.g. "Entertainment", "School Research", "Shopping", "Email", "Travel Plans".
+- Avoid vague categories like "Other", "Misc", or "General".
+- You can create your own categories — just keep them useful and intuitive.
+- Every tab title must be included exactly once in one category.
+- If a tab is called exactly "New Tab", group it under "New Tabs".
+- If a tab includes "Google Search", categorize it by the topic being searched. For example:
+  - "how to book cheap flights - Google Search" → "Travel"
+  - "is coffee good for you - Google Search" → "Health"
 
-### Strict Rules:
-
-1. Choose categories **only** from this approved list:
-   - "Work", "Research", "Entertainment", "Education", "Shopping", "Social Media", "News", "Email", "Documentation", "Productivity", "Finance", "Travel", "Technology", "Weather", "Health", "Food", "New Tabs"
-
-2. If a tab is **'New Tab'**, assign it to `"New Tabs"`.
-
-3. NEVER use categories like "Search", "Other", "Miscellaneous", or create new ones.
-
-4. If a tab includes "Google Search", classify it by the actual topic searched:
-   - "weather in Paris - Google Search" → "Weather"
-   - "how to get a scholarship - Google Search" → "Education"
-
-5. Each tab must be assigned to **exactly one** of the approved categories.
-
----
+Output must be valid JSON and nothing else. No comments, no extra text.
 
 Here is the list of tab titles:
