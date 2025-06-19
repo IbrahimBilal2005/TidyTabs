@@ -1,4 +1,4 @@
-const BACKEND_URL = "https://your-backend-name.onrender.com/categorize";
+const BACKEND_URL = "https://tidytabs-ai.onrender.com/categorize";
 
 function setStatus(message, isLoading = false) {
   const statusDiv = document.getElementById("status");
