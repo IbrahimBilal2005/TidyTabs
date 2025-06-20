@@ -69,9 +69,34 @@ git clone https://github.com/IbrahimBilal2005/TidyTabs.git
 cd TidyTabs
 ```
 
-- This repo contains both the Chrome extension and the FastAPI backend.
+---
 
-#### 2. Deploy the Backend to Render
+#### 2. Create and Activate a Virtual Environment
+
+- **Windows:**
+
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+
+- **macOS/Linux:**
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+---
+
+#### 3. Install Required Packages
+
+```bash
+pip install -r requirements.txt
+```
+
+
+#### 4. Deploy the Backend to Render
 
 - Go to [https://render.com](https://render.com)
 - Click **"New Web Service"** and connect your GitHub repo
@@ -89,7 +114,7 @@ cd TidyTabs
 
 ---
 
-#### 3. Configure the Extension
+#### 5. Configure the Extension
 
 In the root folder of this repo, create a file called `config.js`:
 
@@ -100,7 +125,7 @@ export const BACKEND_URL = "https://your-render-url.onrender.com";
 
 > ⚠️ This file is ignored in `.gitignore` to keep your setup private. You must create it manually.
 
-#### 4. Load the Extension in Chrome
+#### 6. Load the Extension in Chrome
 
 - Go to `chrome://extensions/`
 - Enable **Developer Mode** (top right)
