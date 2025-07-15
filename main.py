@@ -44,7 +44,7 @@ def categorize_tabs(data: TabData):
 
     try:
         response = client.chat.completions.create( # Asynchronous call to OpenAI API
-            model="gpt-3.5-turbo", 
+            model="gpt-4", # Use the latest model available
             messages=[
                 {
                     "role": "user",
