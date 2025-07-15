@@ -1,0 +1,45 @@
+
+# Exports
+.zip 
+
+# === PYTHON ===
+__pycache__/
+*.py[cod]
+*.so
+*.log
+*.tmp
+*.pid
+
+# Virtual environments
+.venv/
+env/
+venv/
+
+# Environment variables and secrets
+.env
+
+# Model files and checkpoints
+ml/*.bin
+ml/*.pt
+ml/*.pth
+ml/*checkpoint*
+ml/distilbert_tab_classifier/
+ml/label_encoder.joblib
+
+# Tokenizer and config cache (optional, depends if you're saving them)
+ml/tokenizer_config.json
+ml/special_tokens_map.json
+ml/config.json
+
+# Pytest and Jupyter artifacts
+.pytest_cache/
+*.ipynb_checkpoints
+
+# Data
+*.sqlite3
+*.db
+*.csv
+
+# OS-specific
+.DS_Store
+Thumbs.db
