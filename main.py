@@ -1,11 +1,15 @@
 import os
 import json
 
+from dotenv import load_dotenv
+load_dotenv()  
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from openai import OpenAI
+from ml.predict import predict_categories
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 app = FastAPI()
@@ -26,6 +30,14 @@ class TabData(BaseModel):
 def root():
     return {"status": "TidyTabs backend is live"}
 
+@app.post("/categorize_local")
+def categorize_local(data: TabData):
+    try:
+        categories = predict_categories(data.titles)
+        return {"categories": categories}
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"error": str(e)})
+    
 @app.post("/categorize")
 def categorize_tabs(data: TabData):
     prompt = build_prompt(data.titles)
