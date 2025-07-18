@@ -1,14 +1,18 @@
 import os
 import json
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from openai import OpenAI
+from ml.predict import predict_categories
+from tab_generator import TabGenerator
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 app = FastAPI()
+
+# Initialize the tab generator
+tab_generator = TabGenerator()
 
 # Middleware to handle CORS, allowing requests from any origin
 app.add_middleware(
@@ -22,14 +26,26 @@ app.add_middleware(
 class TabData(BaseModel):
     titles: list[str]
 
+# Define the data model for tab generation request
+class TabGenerationRequest(BaseModel):
+    prompt: str
+
 @app.get("/")
 def root():
     return {"status": "TidyTabs backend is live"}
 
+@app.post("/categorize_local")
+def categorize_local(data: TabData):
+    try:
+        categories = predict_categories(data.titles)
+        return {"categories": categories}
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"error": str(e)})
+
 @app.post("/categorize")
 def categorize_tabs(data: TabData):
     prompt = build_prompt(data.titles)
-
+    
     try:
         response = client.chat.completions.create( # Asynchronous call to OpenAI API
             model="gpt-3.5-turbo", 
@@ -41,12 +57,27 @@ def categorize_tabs(data: TabData):
             ],
             temperature=0.4, # Lower temperature for more deterministic output
         )
-
+        
         # Return the raw GPT content string
         content = response.choices[0].message.content.strip() # Extract the content from the response
         return {"categories": json.loads(content)} # Parse the content as JSON
+      
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"error": str(e)})
 
-
+@app.post("/generate_tabs")
+def generate_tabs(data: TabGenerationRequest):
+    """
+    Generate relevant tabs based on user prompt using LangChain agentic AI
+    """
+    try:
+        # Use the tab generator to create relevant tabs
+        result = tab_generator.generate_tabs(data.prompt)
+        
+        return {
+            "group_name": result["group_name"],
+            "tabs": result["tabs"]
+        }
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": str(e)})
 
