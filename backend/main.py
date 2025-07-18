@@ -1,3 +1,4 @@
+# main.py: FastAPI backend for TidyTabs AI extension
 import os
 import json
 from fastapi import FastAPI
@@ -6,7 +7,7 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from openai import OpenAI
 from ml.predict import predict_categories
-from tab_generator import TabGenerator
+from .tab_generator import TabGenerator
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 app = FastAPI()
@@ -83,6 +84,8 @@ def generate_tabs(data: TabGenerationRequest):
 
 """ Builds the prompt for the OpenAI API using a base template and the provided titles."""
 def build_prompt(titles: list[str]) -> str:
-    with open("prompt.txt", "r") as f:
+    prompt_path = os.path.join(os.path.dirname(__file__), "prompt.txt")
+    with open(prompt_path, "r") as f:
         base_prompt = f.read()
     return base_prompt + "\n\n" + json.dumps(titles, indent=2)
+

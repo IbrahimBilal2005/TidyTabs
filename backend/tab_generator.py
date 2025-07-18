@@ -1,3 +1,4 @@
+# tab_generator.py
 import os
 import json
 import re
@@ -263,10 +264,3 @@ Important:
         
         url_lower = url.lower()
         return not any(domain in url_lower for domain in unwanted_domains)
-
-
-# Usage example
-if __name__ == "__main__":
-    generator = TabGenerator()
-    result = generator.generate_tabs("learn machine learning")
-    print(json.dumps(result, indent=2))
