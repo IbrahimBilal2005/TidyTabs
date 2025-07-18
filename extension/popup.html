@@ -9,7 +9,8 @@
       color: #ffffff;
       font-family: 'Segoe UI', sans-serif;
       padding: 15px;
-      width: 300px;
+      width: 350px;
+      min-height: 400px;
     }
 
     h2 {
@@ -18,23 +19,79 @@
       font-weight: 600;
       font-size: 20px;
       text-align: center;
+      margin-bottom: 20px;
     }
 
-    #organizeButton {
+    .section {
+      margin-bottom: 25px;
+      padding: 15px;
+      background-color: #2a2a2a;
+      border-radius: 8px;
+      border: 1px solid #404040;
+    }
+
+    .section h3 {
+      margin-top: 0;
+      margin-bottom: 15px;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .section p {
+      margin: 0 0 15px 0;
+      font-size: 13px;
+      color: #cccccc;
+      line-height: 1.4;
+    }
+
+    button {
       background-color: #64748b;
       color: white;
       font-weight: 500;
       border: none;
-      padding: 10px;
+      padding: 12px;
       width: 100%;
-      border-radius: 5px;
+      border-radius: 6px;
       cursor: pointer;
       font-size: 15px;
       transition: background-color 0.3s ease;
+      margin-bottom: 10px;
     }
 
-    #organizeButton:hover {
+    button:hover {
       background-color: #10b981;
+    }
+
+    #generateButton {
+      background-color: #3b82f6;
+    }
+
+    #generateButton:hover {
+      background-color: #2563eb;
+    }
+
+    #promptInput {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #404040;
+      border-radius: 5px;
+      background-color: #2a2a2a;
+      color: #ffffff;
+      font-size: 14px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+      resize: vertical;
+      min-height: 60px;
+    }
+
+    #promptInput::placeholder {
+      color: #888888;
+    }
+
+    #promptInput:focus {
+      outline: none;
+      border-color: #3b82f6;
     }
 
     #status {
@@ -42,6 +99,7 @@
       font-size: 14px;
       color: #d0d0d0;
       white-space: pre-wrap;
+      text-align: center;
     }
 
     .loading::after {
@@ -55,12 +113,34 @@
       66%  { content: '..'; }
       100% { content: '...'; }
     }
+
+    .example {
+      font-size: 12px;
+      color: #888888;
+      font-style: italic;
+      margin-top: 5px;
+    }
   </style>
 </head>
 <body>
   <h2>TidyTabs AI</h2>
-  <button id="organizeButton">Organize My Tabs</button>
+  
+  <div class="section">
+    <h3>🤖 Generate New Tabs</h3>
+    <p>Describe what you want to do, and AI will create relevant tabs for you.</p>
+    <textarea id="promptInput" placeholder="e.g., Plan a trip to Tokyo, Learn Python programming, Cook Italian dinner..."></textarea>
+    <button id="generateButton">Generate Tabs</button>
+    <div class="example">💡 Try: "Plan a weekend in Paris" or "Learn web development"</div>
+  </div>
+
+  <div class="section">
+    <h3>📂 Organize Existing Tabs</h3>
+    <p>Group your current tabs by topic automatically.</p>
+    <button id="organizeButton">Organize My Tabs</button>
+  </div>
+
   <div id="status" class=""></div>
+  
   <script type="module" src="config.js"></script>
   <script type="module" src="popup.js"></script>
 </body>
