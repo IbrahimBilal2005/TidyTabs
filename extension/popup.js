@@ -18,7 +18,7 @@ document.getElementById("organizeButton").addEventListener("click", async () => 
     setStatus("Organizing tabs", true);
     
     try {
-      const response = await fetch(`${BACKEND_URL}/categorize`, {
+      const response = await fetch(`${BACKEND_URL}/categorize_local`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ titles }),  // Convert JS object to JSON string

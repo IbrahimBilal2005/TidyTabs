@@ -1,4 +1,3 @@
-
 # Exports
 .zip 
 
@@ -18,18 +17,13 @@ venv/
 # Environment variables and secrets
 .env
 
-# Model files and checkpoints
+# Model files (keep important ones for inference)
 ml/*.bin
 ml/*.pt
 ml/*.pth
 ml/*checkpoint*
 ml/distilbert_tab_classifier/
-ml/label_encoder.joblib
-
-# Tokenizer and config cache (optional, depends if you're saving them)
-ml/tokenizer_config.json
-ml/special_tokens_map.json
-ml/config.json
+ml/*.joblib
 
 # Pytest and Jupyter artifacts
 .pytest_cache/
