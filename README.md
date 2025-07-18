@@ -25,33 +25,38 @@ It scans your open tabs, understands what each one is about, and intelligently g
 No more tab overload. No more chaos. Just clean, color-coded clarity.
 
 <p align="center">
-  <img src="organized.png" alt="Organized Tabs" width="450"/>
-  <img src="unorganized.png" alt="Unorganized Tabs" width="450"/>
+    <img src="demo_photos/unorganized.png" alt="Unorganized Tabs" width="450"/>
+  <img src="demo_photos/organized.png" alt="Organized Tabs" width="450"/>
 </p>
 
 ---
 
-## ✨ New: Generate Tabs from a Prompt
+<h2>✨ New: Generate Tabs from a Prompt</h2>
 
-TidyTabs can now **create useful browser tabs for you** — based on a natural language prompt.
+TidyTabs can now <strong>create useful browser tabs for you</strong> — based on a natural language prompt.
 
 Just enter something like:
-- “Plan a trip to New York”
-- “Research best budget microphones for YouTube”
-- “Set up a productivity system using Notion and Google Calendar”
+<ul>
+  <li>“Plan a trip to New York”</li>
+  <li>“Research best budget microphones for YouTube”</li>
+  <li>“Set up a productivity system using Notion and Google Calendar”</li>
+</ul>
 
 And it will generate relevant tabs using trusted sources like:
-- Google Maps
-- YouTube
-- TripAdvisor
-- Booking.com
-- Reddit
-- Wikipedia
+<ul>
+  <li>Google Maps</li>
+  <li>YouTube</li>
+  <li>TripAdvisor</li>
+  <li>Booking.com</li>
+  <li>Reddit</li>
+  <li>Wikipedia</li>
+</ul>
 
 <p align="center">
-  <img src="newyork_query.png" alt="New York Prompt" width="450"/>
-  <img src="new_york_tabs.png" alt="Generated Tabs for New York" width="450"/>
+  <img src="demo_photos/newyork_query.png" alt="New York Prompt" width="450"/>
+  <img src="demo_photos/new_york_tabs.png" alt="Generated Tabs for New York" width="450"/>
 </p>
+
 
 ---
 
