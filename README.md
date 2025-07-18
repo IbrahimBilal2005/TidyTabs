@@ -24,7 +24,35 @@ It scans your open tabs, understands what each one is about, and intelligently g
 
 No more tab overload. No more chaos. Just clean, color-coded clarity.
 
-<img src="demo_photos/before.png" alt="Before Photo" width="500" />     <img src="demo_photos/after.png" alt="After Photo" width="500" />
+<p align="center">
+  <img src="organized.png" alt="Organized Tabs" width="450"/>
+  <img src="unorganized.png" alt="Unorganized Tabs" width="450"/>
+</p>
+
+---
+
+## ✨ New: Generate Tabs from a Prompt
+
+TidyTabs can now **create useful browser tabs for you** — based on a natural language prompt.
+
+Just enter something like:
+- “Plan a trip to New York”
+- “Research best budget microphones for YouTube”
+- “Set up a productivity system using Notion and Google Calendar”
+
+And it will generate relevant tabs using trusted sources like:
+- Google Maps
+- YouTube
+- TripAdvisor
+- Booking.com
+- Reddit
+- Wikipedia
+
+<p align="center">
+  <img src="newyork_query.png" alt="New York Prompt" width="450"/>
+  <img src="new_york_tabs.png" alt="Generated Tabs for New York" width="450"/>
+</p>
+
 ---
 
 ## ⚙️ How It Works
