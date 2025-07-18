@@ -12,55 +12,58 @@
   <img src="https://img.shields.io/badge/OpenAI_API-%236E57E0?style=for-the-badge&logo=openai&logoColor=white"/>
   <img src="https://img.shields.io/badge/Render_Deployment-%23000000?style=for-the-badge&logo=render&logoColor=white"/>
 </p>
-<br/>
 
+---
 
-### Ever have 27 tabs open and no idea why?
+## 🧠 What is TidyTabs?
 
-You're not alone. Between research, YouTube, email, and five versions of “how to focus better,” it’s easy for your browser to become a digital jungle.
+Ever have 27 tabs open and no idea why?
+
+You're not alone. Between research, YouTube, emails, and five versions of “how to focus better,” it’s easy for your browser to become a digital jungle.
 
 **TidyTabs** is a Chrome extension powered by GPT-4 that declutters your browser in one click.  
-It scans your open tabs, understands what each one is about, and intelligently groups them by topic — like **Work**, **Entertainment**, **Travel Plans**, and more — right inside Chrome.
+It understands what each tab is about and intelligently groups them by topic — like **Work**, **Entertainment**, or **Travel Plans** — right inside Chrome.
 
 No more tab overload. No more chaos. Just clean, color-coded clarity.
 
 <p align="center">
-    <img src="demo_photos/unorganized.png" alt="Unorganized Tabs" width="450"/>
+  <img src="demo_photos/unorganized.png" alt="Unorganized Tabs" width="450"/>
   <img src="demo_photos/organized.png" alt="Organized Tabs" width="450"/>
 </p>
 
 ---
 
-<h2>✨ New: Generate Tabs from a Prompt</h2>
+## ✨ Generate Tabs from a Prompt
 
-TidyTabs can now <strong>create useful browser tabs for you</strong> — based on a natural language prompt.
+TidyTabs can now **create useful browser tabs for you** — based on a natural language prompt like:
 
-Just enter something like:
-<ul>
-  <li>“Plan a trip to New York”</li>
-  <li>“Research best budget microphones for YouTube”</li>
-  <li>“Set up a productivity system using Notion and Google Calendar”</li>
-</ul>
+- “Plan a trip to New York”
+- “Research budget microphones for YouTube”
+- “Set up a productivity system using Notion and Google Calendar”
 
-And it will generate relevant tabs using trusted sources like:
-<ul>
-  <li>Google Maps</li>
-  <li>YouTube</li>
-  <li>TripAdvisor</li>
-  <li>Booking.com</li>
-  <li>Reddit</li>
-  <li>Wikipedia</li>
-</ul>
+It will generate relevant tabs using trusted sources like:
+
+- Google Maps
+- YouTube
+- TripAdvisor
+- Booking.com
+- Reddit
+- Wikipedia
 
 <p align="center">
   <img src="demo_photos/newyork_query.png" alt="New York Prompt" width="450"/>
   <img src="demo_photos/new_york_tabs.png" alt="Generated Tabs for New York" width="450"/>
 </p>
 
-
 ---
 
 ## ⚙️ How It Works
+
+TidyTabs has two powerful AI features:
+
+---
+
+### 🗂️ Organize Existing Tabs
 
 1. ✅ **Understands your tabs with context**  
    GPT-4 doesn’t just scan for keywords — it infers the *actual purpose* of each tab.
@@ -73,6 +76,23 @@ And it will generate relevant tabs using trusted sources like:
 
 4. ✅ **Done in seconds**  
    All tabs are neatly grouped — instantly. You stay focused without lifting a finger.
+
+---
+
+### 🌐 Generate Tabs from a Prompt
+
+1. 🧠 **Understands your intent**  
+   Enter a natural prompt like “Plan a trip to New York” or “Learn Python fast” — no special syntax required.
+
+2. 🌍 **Searches the web in real time**  
+   Uses SerpAPI to pull relevant, trusted links across subtopics (e.g., maps, guides, videos, tools).
+
+3. 🤖 **Uses GPT-4 to organize and explain**  
+   GPT-4 selects the best links and gives each one a helpful title and description.
+
+4. 🧩 **Opens a new tab group for you**  
+   Tabs are automatically opened and grouped in Chrome — like building a focused browser workspace instantly.
+
 ---
 
 ## 🧭 How to Use
