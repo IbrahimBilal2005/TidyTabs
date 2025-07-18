@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="icons/icon128.png" alt="TidyTabs Logo" width="100"/>
+  <img src="demo_photos/icon128.png" alt="TidyTabs Logo" width="100"/>
 </p>
 
 <h1 align="center">🧠 TidyTabs — Smart Tab Organizer for Chrome</h1>
@@ -27,8 +27,8 @@ It understands what each tab is about and intelligently groups them by topic —
 No more tab overload. No more chaos. Just clean, color-coded clarity.
 
 <p align="center">
-  <img src="demo_photos/unorganized.png" alt="Unorganized Tabs" width="450"/>
-  <img src="demo_photos/organized.png" alt="Organized Tabs" width="450"/>
+  <img src="demo_photos/unorganized.png" alt="Unorganized Tabs" width="400"/>
+  <img src="demo_photos/organized.png" alt="Organized Tabs" width="400"/>
 </p>
 
 ---
@@ -41,18 +41,18 @@ TidyTabs can now **create useful browser tabs for you** — based on a natural l
 - “Research budget microphones for YouTube”
 - “Set up a productivity system using Notion and Google Calendar”
 
-It will generate relevant tabs using trusted sources like:
+It will generate relevant tabs using sources like:
 
 - Google Maps
 - YouTube
 - TripAdvisor
 - Booking.com
-- Reddit
-- Wikipedia
+- Stack Overflow
+- News
 
 <p align="center">
-  <img src="demo_photos/newyork_query.png" alt="New York Prompt" width="450"/>
-  <img src="demo_photos/new_york_tabs.png" alt="Generated Tabs for New York" width="450"/>
+  <img src="demo_photos/newyork_query.png" alt="New York Prompt" width="400"/>
+  <img src="demo_photos/new_york_tabs.png" alt="Generated Tabs for New York" width="400"/>
 </p>
 
 ---
