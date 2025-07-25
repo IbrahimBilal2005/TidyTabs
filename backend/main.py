@@ -7,13 +7,13 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from openai import OpenAI
 from ml.predict import predict_categories
-from .tab_generator import TabGenerator
+from .tab_generator import TabGeneratorAgent
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 app = FastAPI()
 
 # Initialize the tab generator
-tab_generator = TabGenerator()
+tab_generator = TabGeneratorAgent()
 
 # Middleware to handle CORS, allowing requests from any origin
 app.add_middleware(
