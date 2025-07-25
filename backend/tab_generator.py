@@ -1,266 +1,263 @@
-# tab_generator.py
 import os
 import json
-import re
-from typing import Dict, Any, List
-from urllib.parse import quote
-
+import logging
+from langchain.agents import Tool, AgentExecutor, create_react_agent
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_openai import ChatOpenAI
-from langchain.schema import HumanMessage
 from langchain_community.utilities import SerpAPIWrapper
+from langchain import hub
+
+# --- Logging Setup ---
+logging.basicConfig(
+    level=logging.INFO,
+    format='[%(levelname)s] %(asctime)s - %(message)s',
+    handlers=[
+        logging.FileHandler("tab_generator.log"),
+        logging.StreamHandler()
+    ]
+)
+logger = logging.getLogger(__name__)
 
 
-class TabGenerator:
+class TabGeneratorAgent:
     def __init__(self):
+        logger.info("Initializing TabGeneratorAgent...")
+
         self.llm = ChatOpenAI(
-            model="gpt-4",
+            model="gpt-3.5-turbo",
             temperature=0.3,
             openai_api_key=os.getenv("OPENAI_API_KEY")
         )
-        self.search = SerpAPIWrapper(serpapi_api_key=os.getenv("SERPAPI_API_KEY"))
+        logger.info("ChatOpenAI initialized with model gpt-4")
 
-    def generate_tabs(self, user_prompt: str) -> Dict[str, Any]:
-        """Generate tabs based on user intent using real search results"""
-        try:
-            # Step 1: Generate search queries for different aspects
-            search_queries = self._generate_search_queries(user_prompt)
-            
-            # Step 2: Get real URLs from search results
-            search_results = self._get_search_results(search_queries)
-            
-            # Step 3: Have LLM organize the results into tabs
-            return self._organize_into_tabs(user_prompt, search_results)
-            
-        except Exception as e:
-            print(f"Error: {e}")
-            return self._basic_fallback(user_prompt)
+        self.search_tool = SerpAPIWrapper(serpapi_api_key=os.getenv("SERPAPI_API_KEY"))
+        logger.info("SerpAPIWrapper initialized")
 
-    def _generate_search_queries(self, user_prompt: str) -> List[str]:
-        """Generate specific search queries for different aspects"""
-        prompt = f"""
-User request: "{user_prompt}"
-
-Generate 4-6 specific search queries that would help someone with this request. 
-Think about different aspects they might need:
-- Main topic research
-- Practical tools/resources
-- Reviews/recommendations
-- How-to guides
-- Location-specific info (if relevant)
-- Shopping/booking (if relevant)
-
-Return ONLY a JSON array of search query strings:
-["query1", "query2", "query3", ...]
-
-Examples:
-For "plan a trip to Tokyo": ["Tokyo travel guide", "Tokyo hotels booking", "Tokyo restaurants", "Tokyo attractions", "Tokyo weather"]
-For "learn Python": ["Python tutorial beginners", "Python documentation", "Python practice exercises", "Python IDE", "Python projects"]
-"""
-
-        try:
-            response = self.llm.invoke([HumanMessage(content=prompt)])
-            queries = json.loads(response.content)
-            return queries[:6] if isinstance(queries, list) else [user_prompt]
-        except:
-            # Fallback to basic queries
-            return [
-                user_prompt,
-                f"{user_prompt} guide",
-                f"{user_prompt} reviews",
-                f"best {user_prompt}"
-            ]
-
-    def _get_search_results(self, queries: List[str]) -> List[Dict[str, Any]]:
-        """Get actual search results from SerpAPI"""
-        all_results = []
-        
-        for query in queries:
-            try:
-                results = self.search.results(query)
-                
-                # Extract organic results
-                organic_results = results.get("organic_results", [])
-                
-                for result in organic_results[:3]:  # Top 3 results per query
-                    url = result.get("link")
-                    title = result.get("title")
-                    snippet = result.get("snippet", "")
-                    
-                    if url and title and self._is_valid_url(url):
-                        all_results.append({
-                            "query": query,
-                            "title": title,
-                            "url": url,
-                            "snippet": snippet
-                        })
-                        
-            except Exception as e:
-                print(f"Search failed for query '{query}': {e}")
-                continue
-        
-        return all_results
-
-    def _organize_into_tabs(self, user_prompt: str, search_results: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Have LLM organize search results into useful tabs"""
-        
-        # Format search results for the LLM
-        formatted_results = []
-        for result in search_results:
-            formatted_results.append(
-                f"Title: {result['title']}\n"
-                f"URL: {result['url']}\n"
-                f"Description: {result['snippet']}\n"
-                f"From query: {result['query']}\n"
+        self.tools = [
+            Tool(
+                name="search_web",
+                description="Search the web for relevant URLs based on a query. Returns search results with titles, URLs, and descriptions.",
+                func=self.search_tool.run
             )
-        
-        results_text = "\n---\n".join(formatted_results)
-        
-        prompt = f"""
-User request: "{user_prompt}"
+        ]
 
-Here are real search results from the web:
+        # Create the prompt template with proper format for structured chat agent
+        self.prompt = ChatPromptTemplate.from_messages([
+            ("system", """You are an assistant that helps users by creating useful browser tabs.
 
-{results_text}
+When given a request like "learn Python" or "plan trip to Japan", do the following:
+1. Figure out useful web search queries.
+2. Use the `search_web` tool to get results.
+3. Pick 5–8 of the most useful URLs and organize them into tabs.
+4. For each tab, include a title, url, and description.
 
-Your task:
-1. Select the 5-8 most useful URLs from these results
-2. Organize them into a logical tab group
-3. Give each tab a clear, descriptive title
-4. Explain why each tab is useful
+You have access to the following tools:
+{tools}
 
-Return ONLY valid JSON in this exact format:
+Use the following format:
+
+Question: the input question you must answer
+Thought: you should always think about what to do
+Action: the action to take, should be one of [{tool_names}]
+Action Input: the input to the action
+Observation: the result of the action
+... (this Thought/Action/Action Input/Observation can repeat N times)
+Thought: I now know the final answer
+Final Answer: the final answer to the original input question
+
+IMPORTANT: Your Final Answer MUST be ONLY valid JSON in this exact format:
 {{
-  "group_name": "Short descriptive title for the tab group",
+  "group_name": "Brief descriptive name",
   "tabs": [
-    {{
-      "title": "Clear, descriptive tab title",
-      "url": "EXACT URL from the search results above",
-      "description": "Why this tab is useful for the user's request"
-    }}
+    {{"title": "Tab title", "url": "https://example.com", "description": "Brief description"}}
   ]
 }}
 
-Important:
-- Use ONLY URLs that appear in the search results above
-- Choose the most relevant and useful sites
-- Avoid duplicate or very similar sites
-- Make tab titles descriptive and specific
-"""
+Do not include any explanation or other text in the Final Answer. Only return the JSON."""),
+            ("human", "{input}"),
+            MessagesPlaceholder(variable_name="agent_scratchpad")
+        ])
 
+        # Use a simpler agent approach that works more reliably
+        
+        # Create a custom ReAct prompt template
+        react_prompt = ChatPromptTemplate.from_template("""You are an assistant that helps users by creating useful browser tabs.
+
+When given a request like "learn Python" or "plan trip to Japan", do the following:
+1. Figure out useful web search queries.
+2. Use the `search_web` tool to get results.
+3. Pick 5–8 of the most useful URLs and organize them into tabs.
+4. For each tab, include a title, url, and description.
+
+You have access to the following tools:
+{tools}
+
+Use the following format:
+
+Question: the input question you must answer
+Thought: you should always think about what to do
+Action: the action to take, should be one of [{tool_names}]
+Action Input: the input to the action
+Observation: the result of the action
+... (this Thought/Action/Action Input/Observation can repeat N times)
+Thought: I now know the final answer
+Final Answer: the final answer to the original input question
+
+IMPORTANT: Your Final Answer MUST be ONLY valid JSON in this exact format:
+{{
+  "group_name": "Brief descriptive name",
+  "tabs": [
+    {{"title": "Tab title", "url": "https://example.com", "description": "Brief description"}}
+  ]
+}}
+
+Do not include any explanation or other text in the Final Answer. Only return the JSON.
+
+Begin!
+
+Question: {input}
+Thought: {agent_scratchpad}""")
+
+        self.agent = create_react_agent(
+            llm=self.llm,
+            tools=self.tools,
+            prompt=react_prompt
+        )
+        logger.info("ReAct agent created")
+
+        self.executor = AgentExecutor(
+            agent=self.agent,
+            tools=self.tools,
+            verbose=True,
+            return_intermediate_steps=True,
+            max_iterations=5
+        )
+        logger.info("AgentExecutor initialized")
+
+    def generate_tabs(self, user_prompt: str) -> dict:
+        logger.info(f"Generating tabs for prompt: {user_prompt}")
         try:
-            response = self.llm.invoke([HumanMessage(content=prompt)])
-            
-            # Try to parse JSON
-            try:
-                result = json.loads(response.content)
-            except json.JSONDecodeError:
-                # Extract JSON from response
-                json_match = re.search(r'\{.*\}', response.content, re.DOTALL)
-                if json_match:
-                    result = json.loads(json_match.group())
-                else:
-                    raise Exception("No valid JSON found")
-            
-            # Validate result
-            if self._validate_result(result, search_results):
-                return result
+            result = self.executor.invoke({"input": user_prompt})
+            raw_output = result.get("output", "")
+            logger.info(f"Raw output from agent:\n{raw_output}")
+
+            # Try to parse the JSON response
+            parsed_output = self._parse_json_response(raw_output)
+            if parsed_output:
+                logger.info("Successfully parsed agent output to JSON")
+                return self._validate_and_clean_result(parsed_output)
             else:
-                raise Exception("Invalid result structure")
-                
+                logger.warning("Failed to parse agent output, using fallback")
+                return self._create_fallback_response(user_prompt)
+
         except Exception as e:
-            print(f"LLM organization failed: {e}")
-            # Create simple tabs from search results
-            return self._create_simple_tabs(user_prompt, search_results)
+            logger.error(f"[Agent Error] {e}", exc_info=True)
+            return self._create_fallback_response(user_prompt)
 
-    def _validate_result(self, result: Dict[str, Any], search_results: List[Dict[str, Any]]) -> bool:
-        """Validate that the result uses only real URLs from search results"""
-        if not isinstance(result, dict) or "group_name" not in result or "tabs" not in result:
-            return False
+    def _parse_json_response(self, response: str) -> dict:
+        """Extract and parse JSON from the agent response"""
+        if not response or not response.strip():
+            return None
         
-        if not isinstance(result["tabs"], list) or len(result["tabs"]) == 0:
-            return False
+        # Try direct JSON parsing first
+        try:
+            return json.loads(response)
+        except json.JSONDecodeError:
+            pass
         
-        # Get all valid URLs from search results
-        valid_urls = {r["url"] for r in search_results}
+        # Try to extract JSON using regex
+        import re
         
-        # Check each tab
-        valid_tabs = []
-        for tab in result["tabs"]:
-            if (isinstance(tab, dict) and 
-                "title" in tab and "url" in tab and "description" in tab and
-                tab["url"] in valid_urls):
-                valid_tabs.append(tab)
+        # Look for JSON patterns
+        patterns = [
+            r'\{[^{}]*"group_name"[^{}]*"tabs"[^{}]*\[[^\]]*\][^{}]*\}',
+            r'\{.*?"group_name".*?"tabs".*?\[.*?\].*?\}',
+            r'```(?:json)?\s*(\{.*?\})\s*```',
+            r'(\{.*\})'
+        ]
         
-        if len(valid_tabs) == 0:
-            return False
+        for pattern in patterns:
+            matches = re.findall(pattern, response, re.DOTALL)
+            for match in matches:
+                try:
+                    result = json.loads(match)
+                    if "group_name" in result and "tabs" in result:
+                        return result
+                except json.JSONDecodeError:
+                    continue
         
-        result["tabs"] = valid_tabs
-        return True
+        return None
 
-    def _create_simple_tabs(self, user_prompt: str, search_results: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Create simple tabs directly from search results"""
-        tabs = []
-        seen_urls = set()
-        
-        for result in search_results[:8]:  # Max 8 tabs
-            url = result["url"]
-            if url not in seen_urls:
-                seen_urls.add(url)
-                tabs.append({
-                    "title": result["title"],
-                    "url": url,
-                    "description": result["snippet"][:100] + "..." if len(result["snippet"]) > 100 else result["snippet"]
-                })
-        
-        return {
-            "group_name": f"Research: {user_prompt}",
-            "tabs": tabs
-        }
+    def _validate_and_clean_result(self, result: dict) -> dict:
+        """Validate and clean the parsed result"""
+        try:
+            cleaned_tabs = []
+            for tab in result.get("tabs", []):
+                if isinstance(tab, dict) and "title" in tab and "url" in tab:
+                    url = tab["url"]
+                    if not url.startswith("http"):
+                        url = f"https://{url}"
+                    
+                    cleaned_tabs.append({
+                        "title": str(tab["title"])[:100],
+                        "url": url,
+                        "description": str(tab.get("description", ""))[:200]
+                    })
+            
+            return {
+                "group_name": str(result.get("group_name", "Generated Tabs"))[:50],
+                "tabs": cleaned_tabs[:8]
+            }
+        except Exception as e:
+            logger.error(f"Result validation failed: {e}")
+            return None
 
-    def _basic_fallback(self, user_prompt: str) -> Dict[str, Any]:
-        """Last resort fallback with guaranteed working URLs"""
-        safe_query = quote(user_prompt)
+    def _create_fallback_response(self, user_prompt: str) -> dict:
+        """Create a fallback response when the agent fails"""
         return {
             "group_name": f"Search: {user_prompt}",
             "tabs": [
                 {
-                    "title": f"Google Search - {user_prompt}",
-                    "url": f"https://www.google.com/search?q={safe_query}",
-                    "description": "Search Google for your request"
+                    "title": "Google Search",
+                    "url": f"https://www.google.com/search?q={user_prompt.replace(' ', '+')}",
+                    "description": "Search results from Google"
                 },
                 {
-                    "title": f"YouTube - {user_prompt}",
-                    "url": f"https://www.youtube.com/results?search_query={safe_query}",
-                    "description": "Find videos related to your request"
+                    "title": "YouTube Search", 
+                    "url": f"https://www.youtube.com/results?search_query={user_prompt.replace(' ', '+')}",
+                    "description": "Video content on YouTube"
                 },
                 {
-                    "title": f"Wikipedia - {user_prompt}",
-                    "url": f"https://en.wikipedia.org/w/index.php?search={safe_query}",
-                    "description": "Encyclopedia information"
+                    "title": "Wikipedia Search",
+                    "url": f"https://en.wikipedia.org/wiki/Special:Search?search={user_prompt.replace(' ', '+')}",
+                    "description": "Encyclopedia articles on Wikipedia"
                 }
             ]
         }
 
-    def _is_valid_url(self, url: str) -> bool:
-        """Check if URL is valid and not from unwanted domains"""
-        if not url or not isinstance(url, str):
-            return False
-        
-        # Basic URL pattern check
-        pattern = re.compile(
-            r'^https?://'
-            r'(([A-Z0-9-]+\.)+[A-Z]{2,6}|localhost|\d{1,3}(\.\d{1,3}){3})'
-            r'(:\d+)?(/.*)?$', re.IGNORECASE)
-        
-        if not pattern.match(url):
-            return False
-        
-        # Filter out unwanted domains
-        unwanted_domains = [
-            "example.com", "test.com", "placeholder.com",
-            "facebook.com", "twitter.com", "instagram.com",  # Social media can be less useful
-            "linkedin.com", "pinterest.com"
-        ]
-        
-        url_lower = url.lower()
-        return not any(domain in url_lower for domain in unwanted_domains)
+    def test_search(self, query: str) -> str:
+        """Test method to check if SerpAPI is working"""
+        try:
+            return self.search_tool.run(query)
+        except Exception as e:
+            return f"Search error: {e}"
+
+    def test_simple_generation(self, prompt: str) -> dict:
+        """Simple test without agent - just direct LLM call"""
+        try:
+            test_prompt = f"""Create browser tabs for: {prompt}
+
+Return only JSON in this format:
+{{
+  "group_name": "Learning Python",
+  "tabs": [
+    {{"title": "Python.org", "url": "https://python.org", "description": "Official Python website"}},
+    {{"title": "Python Tutorial", "url": "https://docs.python.org/3/tutorial/", "description": "Official Python tutorial"}}
+  ]
+}}"""
+            
+            response = self.llm.invoke(test_prompt)
+            return self._parse_json_response(response.content)
+        except Exception as e:
+            logger.error(f"Simple test failed: {e}")
+            return None

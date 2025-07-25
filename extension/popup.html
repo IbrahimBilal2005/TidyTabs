@@ -4,26 +4,29 @@
   <meta charset="UTF-8">
   <title>TidyTabs AI</title>
   <style>
-    body {
+    html, body {
+      margin: 0;
+      padding: 0;
       background-color: #1e1e1e;
       color: #ffffff;
       font-family: 'Segoe UI', sans-serif;
-      padding: 15px;
       width: 350px;
-      min-height: 400px;
+    }
+
+    body {
+      padding: 15px;
+      box-sizing: border-box;
     }
 
     h2 {
-      margin-top: 0;
       color: #ffffff;
       font-weight: 600;
       font-size: 20px;
       text-align: center;
-      margin-bottom: 20px;
+      margin: 0 0 20px 0;
     }
 
     .section {
-      margin-bottom: 25px;
       padding: 15px;
       background-color: #2a2a2a;
       border-radius: 8px;
@@ -31,8 +34,7 @@
     }
 
     .section h3 {
-      margin-top: 0;
-      margin-bottom: 15px;
+      margin: 0 0 15px 0;
       color: #ffffff;
       font-size: 16px;
       font-weight: 500;
@@ -63,37 +65,6 @@
       background-color: #10b981;
     }
 
-    #generateButton {
-      background-color: #3b82f6;
-    }
-
-    #generateButton:hover {
-      background-color: #2563eb;
-    }
-
-    #promptInput {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #404040;
-      border-radius: 5px;
-      background-color: #2a2a2a;
-      color: #ffffff;
-      font-size: 14px;
-      margin-bottom: 10px;
-      box-sizing: border-box;
-      resize: vertical;
-      min-height: 60px;
-    }
-
-    #promptInput::placeholder {
-      color: #888888;
-    }
-
-    #promptInput:focus {
-      outline: none;
-      border-color: #3b82f6;
-    }
-
     #status {
       margin-top: 15px;
       font-size: 14px;
@@ -113,28 +84,13 @@
       66%  { content: '..'; }
       100% { content: '...'; }
     }
-
-    .example {
-      font-size: 12px;
-      color: #888888;
-      font-style: italic;
-      margin-top: 5px;
-    }
   </style>
 </head>
 <body>
   <h2>TidyTabs AI</h2>
 
   <div class="section">
-    <h3>🤖 Generate New Tabs</h3>
-    <p>Describe what you want to do, and AI will create relevant tabs for you.</p>
-    <textarea id="promptInput" placeholder="e.g., Plan a trip to Tokyo, Learn Python programming, Cook Italian dinner..."></textarea>
-    <button id="generateButton">Generate Tabs</button>
-    <div class="example">💡 Try: "Plan a weekend in Paris" or "Learn web development"</div>
-  </div>
-
-  <div class="section">
-    <h3>📂 Organize Existing Tabs</h3>
+    <h3>🤖 Organize My Tabs</h3>
     <p>Group your current tabs by topic automatically.</p>
     <button id="organizeButton">Organize My Tabs</button>
   </div>
