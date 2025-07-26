@@ -1,15 +1,16 @@
 #/ml/predict.py
 
+import os
 import torch
 import joblib
 from transformers import DistilBertTokenizerFast, DistilBertForSequenceClassification
 
-# Load model and tokenizer
-MODEL_PATH = "ml/distilbert_tab_classifier"
-ENCODER_PATH = "ml/label_encoder.joblib"
+MODEL_PATH = os.path.join(os.path.dirname(__file__), "distilbert_tab_classifier")
+ENCODER_PATH = os.path.join(os.path.dirname(__file__), "label_encoder.joblib")
 
-tokenizer = DistilBertTokenizerFast.from_pretrained(MODEL_PATH)
-model = DistilBertForSequenceClassification.from_pretrained(MODEL_PATH)
+tokenizer = DistilBertTokenizerFast.from_pretrained(MODEL_PATH, local_files_only=True)
+model = DistilBertForSequenceClassification.from_pretrained(MODEL_PATH, local_files_only=True)
+
 model.eval()
 
 label_encoder = joblib.load(ENCODER_PATH)
