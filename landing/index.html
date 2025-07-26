@@ -19,6 +19,26 @@
     <!-- Bootstrap CSS / Color Scheme -->
     <link rel="stylesheet" href="css/default.css" id="theme-color">
     <link rel="icon" href="img/icon.png" type="image/png">
+
+    <style>
+        .responsive-iframe {
+            width: 560px;
+            height: 315px;
+        }
+
+        @media (max-width: 600px) {
+            .responsive-iframe {
+                width: 400px;
+                height: 225px;
+                /* Maintain 16:9 ratio */
+            }
+        }
+
+        .text-footer{
+            color: #acb5be;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -70,21 +90,11 @@
                         <small class="ml-2">(It's free)</small>
                     </a>
 
-                    <!-- <div class="rating-stars mt-4">
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star-half-empty"></span>
-                    </div> -->
-                    <!-- <p class="text-muted small">
-                        (150,000+ <a href="#" class="text-muted">reviews</a> by 1.5 million users)
-                    </p> -->
                 </div>
             </div>
             <div class="row mt-4">
                 <div class="col-md-9 mx-auto text-center">
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/etvK0nb5GyE?si=5g-QOHb4TY87YGED"
+                    <iframe class="responsive-iframe" src="https://www.youtube.com/embed/etvK0nb5GyE?si=5g-QOHb4TY87YGED"
                         title="YouTube video player" frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -120,7 +130,7 @@
                                 GPT-4 doesn’t just scan for keywords — it infers the actual purpose of each tab.
                             </div>
                         </a>
-                        <a class="nav-link" id="v-tab2-tab" data-toggle="tab" href="#v-tab2" role="tab"
+                        <a class="nav-link" id="v-tab1-tab" data-toggle="tab" href="#v-tab1" role="tab"
                             aria-controls="v-tab2" aria-selected="false">
                             <div class="card card-body">
                                 <h6>Categorizes them like a pro</h6>
@@ -128,14 +138,14 @@
                                 no setup needed.
                             </div>
                         </a>
-                        <a class="nav-link" id="v-tab3-tab" data-toggle="tab" href="#v-tab3" role="tab"
+                        <a class="nav-link" id="v-tab3-tab" data-toggle="tab" href="#v-tab1" role="tab"
                             aria-controls="v-tab3" aria-selected="false">
                             <div class="card card-body">
                                 <h6>Applies color-coded tab groups</h6>
                                 Chrome tab groups are created and color-coded for visual clarity and faster navigation.
                             </div>
                         </a>
-                        <a class="nav-link" id="v-tab4-tab" data-toggle="tab" href="#v-tab4" role="tab"
+                        <a class="nav-link" id="v-tab4-tab" data-toggle="tab" href="#v-tab1" role="tab"
                             aria-controls="v-tab4" aria-selected="false">
                             <div class="card card-body">
                                 <h6>Done in seconds</h6>
@@ -165,133 +175,145 @@
     </section>
 
     <!-- How to Use Section -->
-<section class="py-6 bg-light" id="how-to-use">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 mx-auto text-center">
-                <h2 class="display-4 mb-4">How to Use</h2>
-                <p class="lead text-muted mb-5">
-                    Get started with TidyTabs in a few simple steps.
-                </p>
-                <div class="row justify-content-center">
-                    <div class="col-lg-10 mx-auto">
-                        <ul class="list-unstyled text-left lead">
-                            <li class="mb-4">
-                                <b>1. Install:</b> Add TidyTabs from the Chrome Web Store. <span class="text-muted">(Official extension link coming soon!)</span>
-                            </li>
-                            <li class="mb-4">
-                                <b>2. Click:</b> Tap the <b>TidyTabs</b> icon in your Chrome toolbar.
-                            </li>
-                            <li class="mb-4">
-                                <b>3. Organize:</b> In the popup, click <b>“Organize My Tabs.”</b>
-                            </li>
-                            <li class="mb-4">
-                                <b>4. Let it work:</b> TidyTabs will read your open tab titles, use GPT to interpret and group them, and automatically apply Chrome tab groups (like Productivity, News, Entertainment, etc.).
-                            </li>
-                            <li class="mb-2">
-                                <span class="font-italic text-muted">Tip: To regroup after opening new tabs, just click the button again!</span>
-                            </li>
-                        </ul>
+    <section class="py-6 bg-light" id="how-to-use">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 mx-auto text-center">
+                    <h2 class="display-4 mb-4">How to Use</h2>
+                    <p class="lead text-muted mb-5">
+                        Get started with TidyTabs in a few simple steps.
+                    </p>
+                    <div class="row justify-content-center">
+                        <div class="col-lg-10 mx-auto">
+                            <ul class="list-unstyled text-left lead">
+                                <li class="mb-4">
+                                    <b>1. Install:</b> Add TidyTabs from the Chrome Web Store. <span
+                                        class="text-muted">(Official extension link coming soon!)</span>
+                                </li>
+                                <li class="mb-4">
+                                    <b>2. Click:</b> Tap the <b>TidyTabs</b> icon in your Chrome toolbar.
+                                </li>
+                                <li class="mb-4">
+                                    <b>3. Organize:</b> In the popup, click <b>“Organize My Tabs.”</b>
+                                </li>
+                                <li class="mb-4">
+                                    <b>4. Let it work:</b> TidyTabs will read your open tab titles, use GPT to interpret
+                                    and group them, and automatically apply Chrome tab groups (like Productivity, News,
+                                    Entertainment, etc.).
+                                </li>
+                                <li class="mb-2">
+                                    <span class="font-italic text-muted">Tip: To regroup after opening new tabs, just
+                                        click the button again!</span>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- Upcoming Features Section -->
-<section class="py-6" id="upcoming-features">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 mx-auto text-center">
-                <h2 class="display-4 mb-4">Upcoming Features</h2>
-                <h4 class="mb-4 font-weight-bold">✨ Generate Tabs from a Prompt</h4>
-                <p class="lead text-muted">
-                    In version 1.2, you'll be able to create groups of relevant browser tabs just by describing what you want—TidyTabs does the rest.
-                </p>
+    <!-- Upcoming Features Section -->
+    <section class="py-6" id="upcoming-features">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 mx-auto text-center">
+                    <h2 class="display-4 mb-4">Upcoming Features</h2>
+                    <h4 class="mb-4 font-weight-bold">✨ Generate Tabs from a Prompt</h4>
+                    <p class="lead text-muted">
+                        In version 1.2, you'll be able to create groups of relevant browser tabs just by describing what
+                        you want—TidyTabs does the rest.
+                    </p>
+                </div>
             </div>
-        </div>
-        <div class="row justify-content-center mt-4">
-            <div class="col-md-6 mb-4">
-                <div class="card card-body text-left shadow-sm">
-                    <b>Try prompts like:</b>
-                    <ul class="mb-0 mt-2 pl-3">
-                        <li>Plan a trip to New York</li>
-                        <li>Research budget microphones for YouTube</li>
-                        <li>Set up a productivity system using Notion and Google Calendar</li>
+            <div class="row justify-content-center mt-4">
+                <div class="col-md-6 mb-4">
+                    <div class="card card-body text-left shadow-sm">
+                        <b>Try prompts like:</b>
+                        <ul class="mb-0 mt-2 pl-3">
+                            <li>Plan a trip to New York</li>
+                            <li>Research budget microphones for YouTube</li>
+                            <li>Set up a productivity system using Notion and Google Calendar</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Demo Images Row -->
+            <div class="row mt-4">
+                <div class="col-md-6 text-center mb-4 mb-md-0">
+                    <img src="img/generate_tabs_query.png" alt="Prompt input demo" class="img-fluid rounded shadow">
+                    <div class="small text-muted mt-2">Sample prompt: "Plan a trip to New York"</div>
+                </div>
+                <div class="col-md-6 text-center">
+                    <img src="img/generate_tabs_prompt.png" alt="Generated tabs demo" class="img-fluid rounded shadow">
+                    <div class="small text-muted mt-2">Generated tabs in a new group</div>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-md-8 mx-auto">
+                    <ul class="list-group list-group-flush lead text-left">
+                        <li class="list-group-item bg-transparent border-0 pb-3">
+                            <b>🧠 Understands your intent:</b> Enter a natural prompt—no special syntax required.
+                        </li>
+                        <li class="list-group-item bg-transparent border-0 pb-3">
+                            <b>🌍 Searches the web in real time:</b> Uses SerpAPI to pull relevant, trusted links across
+                            subtopics (e.g., maps, guides, videos, tools).
+                        </li>
+                        <li class="list-group-item bg-transparent border-0 pb-3">
+                            <b>🤖 Uses GPT-4 to organize and explain:</b> GPT-4 selects the best links and gives each a
+                            helpful title and description.
+                        </li>
+                        <li class="list-group-item bg-transparent border-0">
+                            <b>🧩 Opens a new tab group for you:</b> Tabs are automatically opened and grouped in
+                            Chrome—building a focused workspace instantly.
+                        </li>
                     </ul>
                 </div>
             </div>
         </div>
-        <!-- Demo Images Row -->
-        <div class="row mt-4">
-            <div class="col-md-6 text-center mb-4 mb-md-0">
-                <img src="img/generate_tabs_query.png" alt="Prompt input demo" class="img-fluid rounded shadow">
-                <div class="small text-muted mt-2">Sample prompt: "Plan a trip to New York"</div>
-            </div>
-            <div class="col-md-6 text-center">
-                <img src="img/generate_tabs_prompt.png" alt="Generated tabs demo" class="img-fluid rounded shadow">
-                <div class="small text-muted mt-2">Generated tabs in a new group</div>
-            </div>
-        </div>
-        <div class="row mt-5">
-            <div class="col-md-8 mx-auto">
-                <ul class="list-group list-group-flush lead text-left">
-                    <li class="list-group-item bg-transparent border-0 pb-3">
-                        <b>🧠 Understands your intent:</b> Enter a natural prompt—no special syntax required.
-                    </li>
-                    <li class="list-group-item bg-transparent border-0 pb-3">
-                        <b>🌍 Searches the web in real time:</b> Uses SerpAPI to pull relevant, trusted links across subtopics (e.g., maps, guides, videos, tools).
-                    </li>
-                    <li class="list-group-item bg-transparent border-0 pb-3">
-                        <b>🤖 Uses GPT-4 to organize and explain:</b> GPT-4 selects the best links and gives each a helpful title and description.
-                    </li>
-                    <li class="list-group-item bg-transparent border-0">
-                        <b>🧩 Opens a new tab group for you:</b> Tabs are automatically opened and grouped in Chrome—building a focused workspace instantly.
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</section>
+    </section>
 
-    
+
 
 
     <!--footer / contact-->
     <footer class="py-5 bg-dark text-white" id="footer">
-    <div class="container">
-        <div class="row align-items-center">
-            <!-- Logo/Brand & Tagline -->
-            <div class="col-md-4 mb-3 mb-md-0">
-                <h5 class="mb-1 font-weight-bold">TidyTabs</h5>
-                <div class="small text-muted">Organize your browser, instantly.</div>
-            </div>
-            <!-- Quick Links -->
-            <div class="col-md-4 mb-3 mb-md-0 text-center">
-                <ul class="list-inline mb-2">
-                    <li class="list-inline-item"><a href="#features" class="text-white-50">Features</a></li>
-                    <li class="list-inline-item"><a href="#how-to-use" class="text-white-50">How to Use</a></li>
-                    <li class="list-inline-item"><a href="#upcoming-features" class="text-white-50">Upcoming</a></li>
-                </ul>
-            </div>
-            <!-- Social & Contact -->
-            <div class="col-md-4 text-center text-md-right">
-                <div class="mb-2">
-                    <a href="mailto:ibrahim.05.bilal@gmail.com" class="text-white-50 mr-2"><i class="fa fa-envelope"></i></a>
-                    <a href="https://chromewebstore.google.com/detail/inmcfgkemanhdkhcfefdhokeogfcllap?utm_source=item-share-cb" target="_blank" class="text-white-50 mr-2"><i class="fa fa-chrome"></i></a>
-                    <a href="https://github.com/IbrahimBilal2005/TidyTabs.git" target="_blank" class="text-white-50"><i class="fa fa-github"></i></a>
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- Logo/Brand & Tagline -->
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <h5 class="text-footer">TidyTabs</h5>
+                    <div class="small text-footer">Organize your browser, instantly.</div>
                 </div>
-                <small class="text-muted">ibrahim.05.bilal@gmail.com</small>
+                <!-- Quick Links -->
+                <div class="col-md-4 mb-3 mb-md-0 text-center">
+                    <ul class="list-inline mb-2">
+                        <li class="list-inline-item"><a href="#features" class="text-white-50">Features</a></li>
+                        <li class="list-inline-item"><a href="#how-to-use" class="text-white-50">How to Use</a></li>
+                        <li class="list-inline-item"><a href="#upcoming-features" class="text-white-50">Upcoming</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Social & Contact -->
+                <div class="col-md-4 text-center text-md-right">
+                    <div class="mb-2">
+                        <a href="mailto:ibrahim.05.bilal@gmail.com" class="text-white-50 mr-2"><i
+                                class="fa fa-envelope"></i></a>
+                        <a href="https://chromewebstore.google.com/detail/inmcfgkemanhdkhcfefdhokeogfcllap?utm_source=item-share-cb"
+                            target="_blank" class="text-white-50 mr-2"><i class="fa fa-chrome"></i></a>
+                        <a href="https://github.com/IbrahimBilal2005/TidyTabs.git" target="_blank"
+                            class="text-white-50"><i class="fa fa-github"></i></a>
+                    </div>
+                    <small class="text-footer">ibrahim.05.bilal@gmail.com</small>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12 text-center text-footer small">
+                    &copy; 2025 TidyTabs &mdash; All Rights Reserved
+                </div>
             </div>
         </div>
-        <div class="row mt-4">
-            <div class="col-12 text-center text-muted small">
-                &copy; 2025 TidyTabs &mdash; All Rights Reserved
-            </div>
-        </div>
-    </div>
-</footer>
+    </footer>
 
 
     <!--scroll to top-->
