@@ -1,29 +1,32 @@
 #/ml/predict.py
 
-import os
-import torch
+import pandas as pd
+from sklearn.pipeline import Pipeline
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.naive_bayes import ComplementNB
+from sklearn.preprocessing import LabelEncoder
 import joblib
-from transformers import DistilBertTokenizerFast, DistilBertForSequenceClassification
 
-MODEL_PATH = os.path.join(os.path.dirname(__file__), "distilbert_tab_classifier")
-ENCODER_PATH = os.path.join(os.path.dirname(__file__), "label_encoder.joblib")
+def predict_categories(titles: list[str]):
 
-tokenizer = DistilBertTokenizerFast.from_pretrained(MODEL_PATH, local_files_only=True)
-model = DistilBertForSequenceClassification.from_pretrained(MODEL_PATH, local_files_only=True)
+    # Load the saved model and label encoder
+    clf = joblib.load("ml/data/tab_classifier.pkl")
+    label_encoder = joblib.load("ml/data/label_encoder.pkl")
 
-model.eval()
+    # Predict
+    predictions = clf.predict(titles)
 
-label_encoder = joblib.load(ENCODER_PATH)
+    # Convert numeric labels back to category names
+    decoded_preds = label_encoder.inverse_transform(predictions)
 
-def predict_categories(titles: list[str]) -> dict:
-    inputs = tokenizer(titles, padding=True, truncation=True, return_tensors="pt")
-    with torch.no_grad():
-        outputs = model(**inputs)
-        predicted_indices = torch.argmax(outputs.logits, dim=1).tolist()
-        predicted_labels = label_encoder.inverse_transform(predicted_indices)
+    # Map each category to a list of matching titles
+    predictions = {}
 
-    # Group tab titles by predicted category
-    grouped = {}
-    for title, label in zip(titles, predicted_labels):
-        grouped.setdefault(label, []).append(title)
-    return grouped
+    for title, category in zip(titles, decoded_preds):
+        try:
+            predictions[category].append(title)
+        
+        except Exception as e:
+            predictions[category] = [title]
+        
+    return predictions

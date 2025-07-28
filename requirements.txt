@@ -11,3 +11,6 @@ accelerate>=0.26.0
 langchain
 langchain-community
 duckduckgo-search
+sentence_transformers==5.0.0
+scikit-learn==1.4.1.post1
+kaggelhub==0.3.12

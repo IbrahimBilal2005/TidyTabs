@@ -24,6 +24,8 @@ ml/*.pth
 ml/*checkpoint*
 ml/distilbert_tab_classifier/
 ml/*.joblib
+ml/*.csv
+ml/*.pkl
 
 # Pytest and Jupyter artifacts
 .pytest_cache/
@@ -37,3 +39,4 @@ ml/*.joblib
 # OS-specific
 .DS_Store
 Thumbs.db
+.vercel
