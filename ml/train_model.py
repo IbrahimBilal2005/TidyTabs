@@ -1,72 +1,82 @@
-import json
-import joblib
-import numpy as np
+#/ml/train_model.py
+
+import pandas as pd
 from sklearn.preprocessing import LabelEncoder
+from sklearn.pipeline import Pipeline
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.naive_bayes import ComplementNB
+import joblib
 
-from datasets import Dataset
-from transformers import (
-    DistilBertTokenizerFast,
-    DistilBertForSequenceClassification,
-    Trainer,
-    TrainingArguments
-)
-import torch
+"""
+═════════════════════════════════════════════════════
+📊 Model Evaluation Results
+═════════════════════════════════════════════════════
+• MultinomialNB        → 68% accuracy
+• SVC (RBF kernel)     → 66% accuracy
+• LinearSVC            → 70% accuracy
+• ComplementNB         → 73% accuracy 
+• BernoulliNB          → 61% accuracy
+• KNeighborsClassifier → 35% accuracy 
+• Source used for classifying appropriate model: https://scikit-learn.org/stable/machine_learning_map.html 
+═════════════════════════════════════════════════════
 
-# 1. Load your tab title dataset
-with open("ml/training_data.json", "r") as f:
-    data = json.load(f)
+═════════════════════════════════════════════════════
+📊 Dataset
+═══════════════════════════════════════════════════════════════════════════════════════════════════════
+• Dataset used: https://www.kaggle.com/datasets/timilsinabimal/newsarticlecategories?resource=download
+• This dataset is saved as data.csv in ml/data 
+• Transformed categories into categories appropriate for our model
+• Training data is saved in ml/data as two pkl files
+═══════════════════════════════════════════════════════════════════════════════════════════════════════
+"""
 
-titles = [item["title"] for item in data]
-categories = [item["category"] for item in data]
 
-# 2. Convert category labels to integers using LabelEncoder
-le = LabelEncoder()
-encoded_labels = le.fit_transform(categories)
+df = pd.read_csv("ml/data/data.csv")
+print(df.size)
 
-# Save the label encoder to use during inference
-joblib.dump(le, "ml/label_encoder.joblib")
+# Change existing categories to more suitable cateogries
+mapped_groups = {
+    "ARTS & CULTURE": "Entertainment",
+    "BUSINESS": "Finance",
+    "COMEDY": "Entertainment",
+    "CRIME": "News",
+    "EDUCATION": "Learning",
+    "ENTERTAINMENT": "Entertainment",
+    "ENVIRONMENT": "News",
+    "MEDIA": "News",
+    "POLITICS": "News",
+    "RELIGION": "News",
+    "SCIENCE": "Research",        
+    "SPORTS": "Entertainment",    
+    "TECH": "Work",               
+    "WOMEN": "News"               
+}
 
-# 3. Convert to HuggingFace Dataset format
-dataset = Dataset.from_dict({
-    "text": titles,
-    "label": encoded_labels
-})
+df.replace({
+    "category": mapped_groups
+}, inplace=True)
 
-# 4. Load the DistilBERT tokenizer
-tokenizer = DistilBertTokenizerFast.from_pretrained("distilbert-base-uncased")
+# prints all the categories
+categories = df.category.unique()
 
-# 5. Tokenize the tab titles with fixed max_length padding
-def tokenize_function(batch):
-    return tokenizer(batch["text"], padding="max_length", truncation=True, max_length=32)
+# Gives each ateogry a number, and saves it in column variable
+label_encoder = LabelEncoder()
+df['target'] = label_encoder.fit_transform(df["category"])
 
-tokenized_dataset = dataset.map(tokenize_function, batched=True)
+x = df.title
+y = df.target
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, train_size=0.8, random_state=42)
 
-# 6. Load the DistilBERT model for classification
-model = DistilBertForSequenceClassification.from_pretrained(
-    "distilbert-base-uncased",
-    num_labels=len(le.classes_)
-)
+# Vectorization clf stands for classifier
+clf = Pipeline([
+    ('cv', CountVectorizer()),
+    ('cnb', ComplementNB())
+])
 
-# 7. Define training settings
-training_args = TrainingArguments(
-    output_dir="./ml/distilbert_tab_classifier",
-    per_device_train_batch_size=8,
-    num_train_epochs=4,
-    logging_dir="./ml/logs",
-    logging_steps=10,
-    save_strategy="epoch"
-)
+clf.fit(x_train, y_train)
+print('Accuracy', round(clf.score(x_test, y_test), 4))
 
-# 8. Create a Trainer
-trainer = Trainer(
-    model=model,
-    args=training_args,
-    train_dataset=tokenized_dataset
-)
-
-# 9. Train the model
-trainer.train()
-
-# 10. Save model and tokenizer
-model.save_pretrained("ml/distilbert_tab_classifier")
-tokenizer.save_pretrained("ml/distilbert_tab_classifier")
+# Saves training data
+joblib.dump(clf, "ml/data/tab_classifier.pkl")
+joblib.dump(label_encoder, "ml/data/label_encoder.pkl")
