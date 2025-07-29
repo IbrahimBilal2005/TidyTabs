@@ -143,12 +143,14 @@ def calculate_optimal_threshold(model, vectorizer, label_encoder, titles, catego
 
 def save_model_components(model, vectorizer, label_encoder, threshold=0.5):
     """Save model components to files"""
-    os.makedirs("ml", exist_ok=True)
-    
-    joblib.dump(model, "ml/model.joblib")
-    joblib.dump(vectorizer, "ml/vectorizer.joblib")
-    joblib.dump(label_encoder, "ml/label_encoder.joblib")
-    joblib.dump(threshold, "ml/threshold.joblib")
+    output_dir = "ml/sklearn"
+    os.makedirs(output_dir, exist_ok=True)
+
+    joblib.dump(model, os.path.join(output_dir, "model.joblib"))
+    joblib.dump(vectorizer, os.path.join(output_dir, "vectorizer.joblib"))
+    joblib.dump(label_encoder, os.path.join(output_dir, "label_encoder.joblib"))
+    joblib.dump(threshold, os.path.join(output_dir, "threshold.joblib"))
+
 
 def main():
     """Main training pipeline"""
