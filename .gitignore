@@ -26,6 +26,7 @@ ml/distilbert_tab_classifier/
 ml/*.joblib
 ml/*.csv
 ml/*.pkl
+ml/data/*.json
 
 # Pytest and Jupyter artifacts
 .pytest_cache/
