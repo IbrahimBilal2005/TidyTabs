@@ -1,7 +1,7 @@
-# Exports
-.zip 
+# === Exported Archives ===
+*.zip
 
-# === PYTHON ===
+# === PYTHON Artifacts ===
 __pycache__/
 *.py[cod]
 *.so
@@ -9,31 +9,35 @@ __pycache__/
 *.tmp
 *.pid
 
-# Virtual environments
+# === Virtual Environments ===
 .venv/
 env/
 venv/
 
-# Environment variables and secrets
+# === Environment Secrets ===
 .env
 
-# Model files (keep important ones for inference)
+# === Model Files (keep only valid .joblib)
 ml/*.bin
 ml/*.pt
 ml/*.pth
 ml/*checkpoint*
 ml/distilbert_tab_classifier/
-ml/*.joblib
 
-# Pytest and Jupyter artifacts
+# === Pytest / Notebook Artifacts ===
 .pytest_cache/
 *.ipynb_checkpoints
 
-# Data
+# === Data and Training Files ===
 *.sqlite3
 *.db
 *.csv
 
-# OS-specific
+ml/*.pkl  # old formats
+
+# === OS-specific ===
 .DS_Store
 Thumbs.db
+
+# === Node Artifacts ===
+node_modules/
