@@ -1,0 +1,18 @@
+{
+  "model_type": "Logistic Regression",
+  "categories": [
+    "Education",
+    "Email",
+    "Entertainment",
+    "Finance",
+    "News",
+    "Productivity",
+    "Shopping",
+    "Social Media",
+    "Travel",
+    "Weather",
+    "Work"
+  ],
+  "n_features": 3000,
+  "vocabulary_size": 1491
+}
