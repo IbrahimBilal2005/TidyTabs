@@ -1,3 +1,4 @@
+#main.py
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -17,6 +18,7 @@ class TabData(BaseModel):
     titles: list[str]
 
 @app.get("/")
+@app.head("/")
 def root():
     return {"status": "TidyTabs local backend is live"}
 
