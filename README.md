@@ -13,6 +13,10 @@
   <img src="https://img.shields.io/badge/Render_Deployment-%23000000?style=for-the-badge&logo=render&logoColor=white"/>
 </p>
 
+- [Download Chrome Extension Here!](https://chromewebstore.google.com/detail/tidytabs/inmcfgkemanhdkhcfefdhokeogfcllap?authuser=0&hl=en)
+
+- [Live Status Report](https://stats.uptimerobot.com/jDrCkNv4GI)
+
 ---
 
 ## 🧠 What is TidyTabs?
@@ -99,7 +103,7 @@ TidyTabs has two powerful AI features:
 
 ### 🌍 For Regular Users
 
-1. **Install the extension** from the [Chrome Web Store](https://chrome.google.com/webstore)  (official extension link coming soon!)
+1. **Install the extension** from the [Chrome Web Store](https://chromewebstore.google.com/detail/tidytabs/inmcfgkemanhdkhcfefdhokeogfcllap?authuser=0&hl=en) 
 
 2. Click the **TidyTabs** icon in your Chrome toolbar.
 
