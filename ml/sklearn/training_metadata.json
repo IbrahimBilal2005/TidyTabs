@@ -1,0 +1,20 @@
+{
+  "training_samples": 2671,
+  "num_categories": 11,
+  "feature_count": 1500,
+  "model_type": "LogisticRegression",
+  "threshold": 0.2,
+  "categories": [
+    "Education",
+    "Email",
+    "Entertainment",
+    "Finance",
+    "News",
+    "Productivity",
+    "Shopping",
+    "Social Media",
+    "Travel",
+    "Weather",
+    "Work"
+  ]
+}

@@ -25,6 +25,18 @@ def root():
 @app.post("/categorize_local")
 def categorize_local(data: TabData):
     try:
-        return {"categories": predict_categories(data.titles)}
+        result = predict_categories(data.titles)
+
+        # Log which titles went to "Other"
+        if "Other" in result:
+            print("\n=== Tabs categorized as 'Other' ===")
+            for title in result["Other"]:
+                print(f"- {title}")
+            print("=== End of 'Other' ===\n")
+        
+
+        return {"categories": result}
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": str(e)})
+
+
