@@ -163,7 +163,7 @@ def calculate_optimal_threshold(model, vectorizer, label_encoder, titles, catego
     predictions = model.predict(X_val)
     
     # More granular threshold testing
-    thresholds = np.arange(0.20, 0.42, 0.02)  # Includes 0.40
+    thresholds = np.arange(0.20, 0.42, 0.02) 
     best_threshold = 0.5
     best_score = 0
     
@@ -263,4 +263,4 @@ def main():
         print("4. Consider collecting more training data - aim for 100+ examples per category")
 
 if __name__ == "__main__":
-    main()
+    main() 
