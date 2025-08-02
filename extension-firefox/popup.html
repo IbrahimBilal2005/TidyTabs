@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TidyTabs AI</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #1e1e1e;
+      color: #ffffff;
+      font-family: 'Segoe UI', sans-serif;
+      width: 350px;
+    }
+
+    body {
+      padding: 15px;
+      box-sizing: border-box;
+    }
+
+    h2 {
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 20px;
+      text-align: center;
+      margin: 0 0 20px 0;
+    }
+
+    .section {
+      padding: 15px;
+      background-color: #2a2a2a;
+      border-radius: 8px;
+      border: 1px solid #404040;
+    }
+
+    .section h3 {
+      margin: 0 0 15px 0;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .section p {
+      margin: 0 0 15px 0;
+      font-size: 13px;
+      color: #cccccc;
+      line-height: 1.4;
+    }
+
+    button {
+      background-color: #64748b;
+      color: white;
+      font-weight: 500;
+      border: none;
+      padding: 12px;
+      width: 100%;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 15px;
+      transition: background-color 0.3s ease;
+      margin-bottom: 10px;
+    }
+
+    button:hover {
+      background-color: #10b981;
+    }
+
+    #status {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #d0d0d0;
+      white-space: pre-wrap;
+      text-align: center;
+    }
+
+    .loading::after {
+      content: '...';
+      animation: dots 1.2s steps(3, end) infinite;
+    }
+
+    @keyframes dots {
+      0%   { content: ''; }
+      33%  { content: '.'; }
+      66%  { content: '..'; }
+      100% { content: '...'; }
+    }
+  </style>
+</head>
+<body>
+  <h2>TidyTabs AI</h2>
+
+  <div class="section">
+    <h3>🤖 Organize My Tabs</h3>
+    <p>Group your current tabs by topic automatically.</p>
+    <button id="organizeButton">Organize My Tabs</button>
+  </div>
+
+  <div id="status" class=""></div>
+
+  <script type="module" src="config.js"></script>
+  <script type="module" src="popup.js"></script>
+</body>
+</html>
