@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>TidyTabs AI</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <style>
-    html, body {
+    html,
+    body {
       margin: 0;
       padding: 0;
       background-color: #1e1e1e;
@@ -73,31 +77,126 @@
       text-align: center;
     }
 
+    #status_generate {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #d0d0d0;
+      white-space: pre-wrap;
+      text-align: center;
+    }
+
     .loading::after {
       content: '...';
       animation: dots 1.2s steps(3, end) infinite;
     }
 
     @keyframes dots {
-      0%   { content: ''; }
-      33%  { content: '.'; }
-      66%  { content: '..'; }
-      100% { content: '...'; }
+      0% {
+        content: '';
+      }
+
+      33% {
+        content: '.';
+      }
+
+      66% {
+        content: '..';
+      }
+
+      100% {
+        content: '...';
+      }
     }
+
+    /* .search-wrapper {
+      position: relative;
+      flex:1;
+    }
+
+    .search-container{
+      margin-bottom: 4%;
+    }
+
+    .search-icon {
+      position: absolute;
+      top: 50%;
+      left: 10px;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: #aaa;
+      font-size: 14px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px 10px 10px 30px;
+      font-size: 14px;
+      border-radius: 6px;
+      border: 1px solid #444;
+      background-color: #2a2a2a;
+      color: #fff;
+      box-sizing: border-box;
+    } */
+
+    .search-container {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    #searchInput {
+      flex: 1;
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #404040;
+      border-radius: 6px;
+      background-color: #2a2a2a;
+      color: #ffffff;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    #searchBtn {
+      flex: 0.5;
+      padding: 10px 16px;
+      background-color: #64748b;
+      width: 30%;
+      border: none;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s ease;
+    }
+
+    #searchBtn:hover {
+      background-color: #059669;
+    }
+
   </style>
 </head>
+
 <body>
   <h2>TidyTabs AI</h2>
+
+  <div class="search-container">
+    <input type="text" id="searchInput" placeholder="Type in prompt to generate a new group of tabs">
+    <button type="button" id="searchBtn">Search</button>
+  </div>
+
+ <div id="status_generate" class=""></div>
 
   <div class="section">
     <h3>🤖 Organize My Tabs</h3>
     <p>Group your current tabs by topic automatically.</p>
-    <button id="organizeButton">Organize My Tabs</button>
   </div>
+  <button id="organizeButton">Organize My Tabs</button>
 
   <div id="status" class=""></div>
 
   <script type="module" src="config.js"></script>
   <script type="module" src="popup.js"></script>
 </body>
+
 </html>
