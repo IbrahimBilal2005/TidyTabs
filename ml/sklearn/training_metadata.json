@@ -1,5 +1,5 @@
 {
-  "training_samples": 2671,
+  "training_samples": 2810,
   "num_categories": 11,
   "feature_count": 1500,
   "model_type": "LogisticRegression",

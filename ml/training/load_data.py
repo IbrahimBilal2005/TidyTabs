@@ -7,7 +7,9 @@ def generate_realistic_browser_tabs():
     data = []
     
     education_tabs = [
-        
+        "BFS & DFS Graph Problems: Easy to Medium Difficulty Solutions - Studocu",
+        "CP373 Ethics Reflection Journal",
+        "Two Sum - NeetCode",
         "UTM Academic Calendar",
         "UTSC Academic Calendar",
         "Academic Calendar Fall 2024",
@@ -378,6 +380,14 @@ def generate_realistic_browser_tabs():
     ]
     
     shopping_tabs = [
+        "TidyTabs",
+        "dataset for tab classification - Search",
+        "Editing TidyTabs/README.md at main · IbrahimBilal2005/TidyTabs",
+        "TidyTabs | Status Pages | UptimeRobot",
+        "TidyTabs",
+        "TidyTabs/landing/css at main · IbrahimBilal2005/TidyTabs",
+        "microsfot extensions - Search",
+        "Microsoft Edge Add-ons - tidytabs AI",
         "Chrome Web Store Extensions",
         "Chrome Web Store",
         "TidyTabs - Chrome Web Store",
@@ -1046,6 +1056,8 @@ def generate_realistic_browser_tabs():
     ]
     
     entertainment_tabs = [
+        "Contact the event organizer | Eventbrite Help Center",
+        "Contact us | Eventbrite Help Center",
         # Streaming Video Platforms
         "Netflix Original Series",
         "Amazon Prime Video Exclusive Movies",
@@ -1528,7 +1540,9 @@ def generate_realistic_browser_tabs():
     ]
 
     finance_tabs = [
+        "Log in to your PayPal account",
         # Banking and Account Management
+        "MBL - Internet Banking",
         "Chase Online Banking",
         "Bank of America Account Summary",
         "Wells Fargo Mobile Banking",
@@ -1776,6 +1790,8 @@ def generate_realistic_browser_tabs():
     ]
     
     news_tabs = [
+        "Canada watchdog probing X's use of personal data in AI models' training | Reuters",
+        "Brief Overview of Climate Change - EC-238-OC4 - Environmental Economics",
         "CNN - Live Updates: Breaking U.S. News",
         "BBC News | World Headlines Today",
         "New York Times - Top Stories",
@@ -1972,6 +1988,8 @@ def generate_realistic_browser_tabs():
     ]
 
     social_media_tabs = [
+        "Ahmad Yahya | Software Developer",
+        "how to share my screen on watsapp - Search",
         "Instagram Stories",
         "Instagram Reels",
         "TikTok For You Page",
@@ -2657,6 +2675,150 @@ def generate_realistic_browser_tabs():
     ]
     
     productivity_tabs = [
+        
+        "ChatGPT",
+        "New chat - ChatGPT",
+        "ChatGPT - OpenAI",
+        "Conversation with ChatGPT",
+        "ChatGPT Plus - OpenAI",
+        "OpenAI ChatGPT",
+        "GPT-4 Chat - OpenAI",
+        "ChatGPT 4o - OpenAI",
+        "Help me write code - ChatGPT",
+        "Python debugging question - ChatGPT",
+        "ChatGPT - How to optimize React performance",
+        "Explain machine learning - ChatGPT",
+        "ChatGPT conversation",
+        "GPT-4 Turbo - OpenAI",
+        "ChatGPT - Travel planning assistance",
+        
+        # Claude/Anthropic variants
+        "Claude",
+        "Chat with Claude - Anthropic",
+        "Claude.ai",
+        "New conversation - Claude",
+        "Claude AI Assistant",
+        "Anthropic Claude",
+        "Claude - AI Assistant",
+        "Claude Sonnet - Anthropic",
+        "Code review help - Claude",
+        "Claude - Writing assistance",
+        "Data analysis project - Claude",
+        "Claude AI - Technical documentation",
+        "Creative writing with Claude",
+        "Claude 3.5 Sonnet",
+        
+        # Google Gemini variants
+        "Gemini",
+        "Google Gemini",
+        "Gemini AI - Google",
+        "Bard",
+        "Google Bard",
+        "Gemini Pro - Google",
+        "Chat with Gemini",
+        "Gemini Advanced",
+        "Google AI Studio",
+        "Gemini - Help me plan my trip",
+        "Research assistance - Gemini",
+        "Gemini Ultra",
+        "Google Gemini Chat",
+        
+        # GitHub Copilot variants
+        "GitHub Copilot Chat",
+        "Copilot Chat - GitHub",
+        "GitHub Copilot",
+        "Copilot - Explain this code",
+        "GitHub Copilot Workspace",
+        "Copilot Chat",
+        "Code suggestions - GitHub Copilot",
+        
+        # Microsoft Copilot variants
+        "Microsoft Copilot",
+        "Copilot - Microsoft",
+        "Bing Chat",
+        "Microsoft Bing Chat",
+        "Copilot in Edge",
+        "Bing AI Chat",
+        "Microsoft Copilot Chat",
+        "Copilot - Bing",
+        
+        # Perplexity variants
+        "Perplexity",
+        "Perplexity AI",
+        "Ask Perplexity",
+        "Perplexity - AI Search",
+        "Search with Perplexity",
+        "Perplexity Pro",
+        
+        # Character.AI variants
+        "Character.AI",
+        "Chat with AI characters",
+        "Character AI",
+        "c.ai",
+        "Character.ai - Create characters",
+        
+        # Other AI chat services
+        "You.com",
+        "YouChat - You.com",
+        "Poe by Quora",
+        "Poe",
+        "HuggingFace Chat",
+        "Hugging Face Chat UI",
+        "Replika",
+        "Jasper Chat",
+        "ChatSonic",
+        "WriteSonic Chat",
+        "DeepAI Chat",
+        "Chatsonic by Writesonic",
+        "Pi AI",
+        "Inflection AI Pi",
+        "Claude-2 - Anthropic",
+        "GPT-3.5 Turbo - OpenAI",
+        "LLaMA Chat",
+        "Anthropic Claude 3",
+        "OpenAI GPT-4",
+        "Google PaLM Chat",
+        "Cohere Chat",
+        "AI21 Studio Chat",
+        
+        # Task-specific variations (realistic user scenarios)
+        "Help me debug this Python error - ChatGPT",
+        "Write a business plan - Claude",
+        "Explain quantum physics - Gemini",
+        "Review my code - GitHub Copilot",
+        "Plan my vacation itinerary - Bing Chat",
+        "Translate this document - ChatGPT",
+        "Create a marketing strategy - Claude",
+        "Solve this math problem - Perplexity",
+        "Write a cover letter - Microsoft Copilot",
+        "Brainstorm app ideas - ChatGPT Plus",
+        "Data visualization help - Claude AI",
+        "SQL query optimization - Gemini Pro",
+        "Creative writing prompt - Character.AI",
+        "Research paper assistance - Perplexity AI",
+        "Code documentation - GitHub Copilot Chat",
+        
+        # Mobile/app versions that might show in Chrome
+        "ChatGPT Mobile - OpenAI",
+        "Claude Mobile App",
+        "Gemini Mobile",
+        "Copilot Mobile",
+        
+        # API playground variants
+        "OpenAI Playground",
+        "OpenAI API Playground",
+        "Anthropic Console",
+        "Google AI Studio Playground",
+        "Hugging Face Spaces",
+        
+        # Variations with different conversation states
+        "Continue conversation - ChatGPT",
+        "Resume chat - Claude",
+        "Previous conversation - Gemini",
+        "Chat history - Copilot",
+        "Saved conversation - Perplexity",
+    
+        "Image Resizer",
         # Task Management and Todo Apps
         "Todoist My Tasks Today",
         "Any.do Daily Planner",
