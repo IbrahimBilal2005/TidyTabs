@@ -14,8 +14,9 @@
 </p>
 
 - [Download Chrome Extension Here!](https://chromewebstore.google.com/detail/tidytabs/inmcfgkemanhdkhcfefdhokeogfcllap?authuser=0&hl=en)
-
+- [Demo Video](https://youtu.be/UfSk6MHJUvc?si=iAaxf4YgGd-16LR3)
 - [Live Status Report](https://stats.uptimerobot.com/jDrCkNv4GI)
+
 
 ---
 
