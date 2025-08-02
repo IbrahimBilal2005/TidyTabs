@@ -1,5 +1,2 @@
 # Exclude all CSS files in landing folder from language stats
 landing/css/* linguist-generated=true
-
-# Keep only one CSS file for language detection
-landing/css/default.css linguist-generated=false linguist-language=CSS
