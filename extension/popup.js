@@ -1,10 +1,17 @@
 // popup.js
 
 import { BACKEND_URL } from "./config.js";
+var percent_loaded = 0;
 
 // === UI Status Message Helper ===
 function setStatus(message, isLoading = false) {
   const statusDiv = document.getElementById("status");
+  statusDiv.textContent = message;
+  statusDiv.className = isLoading ? "loading" : "";
+}
+
+function setStatusGenerate(message, isLoading = false) {
+  const statusDiv = document.getElementById("status_generate");
   statusDiv.textContent = message;
   statusDiv.className = isLoading ? "loading" : "";
 }
@@ -61,6 +68,7 @@ async function organizeTabs(tabs, groups) {
   }
 }
 
+
 // === Deterministic Color Assignment ===
 function getGroupColor(name) {
   const colors = ["blue", "red", "yellow", "green", "pink", "purple", "cyan", "orange"];
@@ -72,3 +80,53 @@ function getGroupColor(name) {
 
   return colors[Math.abs(hash) % colors.length];
 }
+
+async function generate_tabs(){
+  const prompt = document.getElementById("searchInput").value.trim();
+  setStatusGenerate("Loading...")
+
+  const response = await fetch(URL=`${BACKEND_URL}/generate_tabs`, {
+    method: 'POST',
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ prompt }),
+  });
+
+
+  const data = JSON.parse(await response.json());
+  const group_name = await data.group_name
+  const parsed = await data.tabs; // List of dicts, containing dicts that have title, url, description
+
+  var newTabIds = [];
+
+  for (const tab of parsed) {
+    if (tab.url) {
+      const newTab = await chrome.tabs.create({ url: tab.url, active: false });
+      newTabIds.push(newTab.id);
+    }
+  }
+
+
+  if (newTabIds.length > 0) {
+    let groupId = await chrome.tabs.group({ tabIds: newTabIds });
+    await chrome.tabGroups.update(groupId, {
+      title: group_name,
+      color: getGroupColor(group_name),
+      collapsed: true
+    });
+  }
+
+  setStatusGenerate(`✅ Your tabs are saved in the tab group: ${group_name}`)
+
+}
+
+
+document.getElementById("searchBtn").addEventListener("click", generate_tabs);
+
+document.getElementById("searchInput").addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    generate_tabs(event);
+  }
+});
+
+
+

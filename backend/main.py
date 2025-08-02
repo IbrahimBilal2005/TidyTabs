@@ -4,6 +4,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from ml.predict import predict_categories
+from .generate_tabs import TabGeneratorAgent
+from pydantic import BaseModel
+import json
+import json
 
 app = FastAPI()
 
@@ -39,4 +43,16 @@ def categorize_local(data: TabData):
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": str(e)})
 
+class PromptRequest(BaseModel):
+    prompt: str
 
+@app.post("/generate_tabs")
+def generate_tabs(req: PromptRequest):
+    try:
+        agent = TabGeneratorAgent()
+        result = agent.generate_tabs(req.prompt)
+        return json.dumps(result, indent=2)
+
+    except Exception as e:
+        print("Error \n\n\n\n\n\n\n\n", e)
+        return {"group_name": "Other", "tabs": []}
