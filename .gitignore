@@ -41,3 +41,5 @@ Thumbs.db
 
 # === Node Artifacts ===
 node_modules/
+
+landing/
