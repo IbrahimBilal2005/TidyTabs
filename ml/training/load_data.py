@@ -3085,6 +3085,126 @@ def generate_realistic_browser_tabs():
         "Cogmed Working Memory"
     ]
     
+    new_tabs = [
+        # Chrome new tab variations
+        "New Tab",
+        "New Tab",
+        "New Tab",
+        "New Tab",
+        "New Tab",
+        "New Tab",
+        "New Tab",
+        "New Tab",
+        "New Tab",
+        "New Tab",
+        
+        # Firefox new tab variations  
+        "New Tab",
+        "New Tab",
+        "New Tab",
+        "New tab",
+        "New tab",
+        "New tab",
+        "New tab",
+        "New tab",
+        
+        # Safari new tab
+        "Untitled",
+        "Untitled",
+        "Untitled",
+        "Untitled",
+        "Untitled",
+        
+        # Edge new tab variations
+        "New tab",
+        "New tab", 
+        "New tab",
+        "new tab",
+        "new tab",
+        "new tab",
+        
+        # Empty/blank new tabs
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        
+        # Opera new tab
+        "Speed Dial",
+        "Speed Dial",
+        "Speed Dial",
+        
+        # Brave new tab
+        "New Tab",
+        "New Tab",
+        
+        # Internet Explorer new tab
+        "New Tab",
+        "about:Tabs",
+        
+        # Vivaldi new tab
+        "Speed Dial",
+        "Start Page",
+        "Start Page",
+        
+        # Mobile browser new tabs
+        "New tab",
+        "New tab",
+        "new tab",
+        
+        # Various capitalizations that might occur
+        "NEW TAB",
+        "NEW TAB",
+        "new Tab",
+        "new Tab",
+        
+        # With default new tab pages showing
+        "New Tab",
+        "New Tab", 
+        "New Tab",
+        "New tab",
+        "New tab",
+        "Untitled",
+        "Untitled",
+        "",
+        "",
+        "Speed Dial",
+        
+        # More empty states
+        "",
+        "",
+        "",
+        "about:blank",
+        "about:blank",
+        "about:newtab",
+        "about:newtab",
+        
+        # Additional browser variations
+        "New Tab",
+        "New tab",
+        "new tab", 
+        "Untitled",
+        "",
+        "Speed Dial",
+        "Start Page",
+        
+        # More repetition for common ones
+        "New Tab",
+        "New Tab",
+        "New Tab",
+        "New Tab",
+        "New tab",
+        "New tab",
+        "new tab",
+        "new tab",
+        "Untitled",
+        "Untitled",
+        "",
+        "",
+        "",
+    ]
     # Combine all categories
     all_categories = {
         "Education": education_tabs,
@@ -3097,7 +3217,8 @@ def generate_realistic_browser_tabs():
         "Email": email_tabs,
         "Weather": weather_tabs,
         "Productivity": productivity_tabs,
-        "Finance": finance_tabs
+        "Finance": finance_tabs,
+        "New Tabs": new_tabs
     }
     
     # Convert to training format
@@ -3130,7 +3251,7 @@ for category, count in category_counts.most_common():
     print(f"  {category}: {count}")
 
 print(f"\nSample titles per category:")
-for category in ["Education", "Shopping", "Travel", "Finance"]:
+for category in ["Education", "Shopping", "Travel", "Finance", "Weather", "Productivity", "New Tabs"]:
     examples = [item["title"] for item in training_data if item["category"] == category][:3]
     print(f"\n{category}:")
     for example in examples:
