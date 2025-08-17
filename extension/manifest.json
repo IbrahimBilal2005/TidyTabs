@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "TidyTabs",
-  "version": "1.1",
-  "description": "Automatically organize your tabs into groups using AI.",
+  "name": "TidyTabs – AI Tab Organizer & Tab Grouping for Chrome",
+  "version": "1.2",
+  "description": "AI-powered Chrome extension for automatic tab organization and grouping.",
   "permissions": [
     "tabs",
     "tabGroups"
@@ -14,7 +14,7 @@
     "128": "icons/icon128.png"
   },
   "action": {
-    "default_popup": "popup.html",
+    "default_popup": "test.html",
     "default_icon": {
       "16": "icons/icon16.png",
       "48": "icons/icon48.png",
