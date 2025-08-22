@@ -41,8 +41,10 @@ class TabGeneratorAgent:
 
                     When given a request like "learn Python" or "plan trip to Japan", do the following:
                     1. Figure out useful search queries.
-                    2. Find 5–8 helpful websites related to it.
-                    3. Return ONLY valid JSON in the following format:
+                    2. Find 5–7 helpful websites related to it.
+                    3. Dedicate 1-2 to tools users might want to use to do that task (i.e Google maps/flights for trips, or docs for writing).
+                    4. Do not return any website unless they return a 200 HTTP response
+                    4. Return ONLY valid JSON in the following format:
                     {{
                     "group_name": "Brief descriptive name",
                     "tabs": [

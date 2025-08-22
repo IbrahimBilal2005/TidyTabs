@@ -4,10 +4,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from ml.predict import predict_categories
-from .generate_tabs import TabGeneratorAgent
+from generate_tabs import TabGeneratorAgent
 from pydantic import BaseModel
 import json
-import json
+import uvicorn
 
 app = FastAPI()
 
@@ -56,3 +56,6 @@ def generate_tabs(req: PromptRequest):
     except Exception as e:
         print("Error \n\n\n\n\n\n\n\n", e)
         return {"group_name": "Other", "tabs": []}
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)

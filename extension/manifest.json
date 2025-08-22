@@ -5,7 +5,8 @@
   "description": "AI-powered Chrome extension for automatic tab organization and grouping.",
   "permissions": [
     "tabs",
-    "tabGroups"
+    "tabGroups",
+    "scripting"
   ],
   "host_permissions": ["<all_urls>"],
   "icons": {
@@ -13,13 +14,19 @@
     "48": "icons/icon48.png",
     "128": "icons/icon128.png"
   },
+  "background": { "service_worker": "background.js" },
   "action": {
-    "default_popup": "test.html",
     "default_icon": {
       "16": "icons/icon16.png",
       "48": "icons/icon48.png",
       "128": "icons/icon128.png"
     },
     "default_title": "TidyTabs AI"
-  }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["popup.html", "popup.js", "style.css", "icons/*", "config.js"],
+      "matches": ["<all_urls>"]
+    }
+  ]
 }
