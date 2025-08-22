@@ -21,7 +21,7 @@ body {
 }
 
 /* Main Container */
-#cmdk-modal {
+#main-container {
   width: 420px;
   height: 210px;
   padding: 16px;
@@ -29,29 +29,6 @@ body {
   background: #1f2937;
   border-radius: 12px;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
-}
-
-.cmdk-item {
-  padding: 10px 12px;
-  margin-bottom: 6px;
-  background: #4b5563;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.cmdk-item:hover,
-.cmdk-item.active {
-  background: #3b82f6;
-}
-
-.cmdk-title {
-  font-weight: bold;
-}
-
-.cmdk-desc {
-  font-size: 0.85rem;
-  color: #d1d5db;
 }
 
 /* ---------- Input with Effects ---------- */
@@ -343,7 +320,7 @@ body {
 /* Results and loading text */
 
 /* Shared styles from https://codepen.io/traf/pen/oKbaqQ */
-#cmdk-results {
+#results {
   display: block;
   list-style: none;
   margin-top: 10px;

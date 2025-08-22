@@ -1,5 +1,5 @@
-const input = document.getElementById('cmdk-input');
-const results = document.getElementById('cmdk-results');
+const input = document.getElementById('main-input');
+const results = document.getElementById('results');
 const organize_btn = document.getElementById("organize-btn");
 const search_btn = document.getElementById("search-btn")
 let search_suggestion;
