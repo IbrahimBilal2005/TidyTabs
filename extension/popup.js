@@ -24,7 +24,7 @@ function setStatus(message, isLoading = false, isError = false) {
 
   if (isLoading) {
     setPopupHeight(true);
-    parent.postMessage({ type: 'TIDYTABS_SET_HEIGHT', expand: false }, '*');
+    chrome.runtime.sendMessage({ type: 'EXPAND', expand: true });
     statusDiv.innerHTML = `
       <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 4px;">
         <span style="color: #cbd5e1; font-size: 0.75rem; border:none">${message}</span>
@@ -47,7 +47,7 @@ function setStatus(message, isLoading = false, isError = false) {
   }
 
   setPopupHeight(false);
-  parent.postMessage({ type: 'TIDYTABS_SET_HEIGHT', expand: true }, '*');
+  chrome.runtime.sendMessage({ type: 'EXPAND', expand: false });
 }
 
 
@@ -62,7 +62,22 @@ organize_btn.addEventListener("click", async () => {
   console.log("Reached event handler for organize")
   setStatus("Scanning tabs…", true);
 
-  chrome.tabs.query({ currentWindow: true }, async (tabs) => {
+  // Get the last focused *normal* browser window
+  const focusedWin = await chrome.windows.getLastFocused();
+  let targetWin = focusedWin;
+
+  if (focusedWin.type !== 'normal') {
+    // Fallback: pick any normal window
+    const normals = await chrome.windows.getAll({ windowTypes: ['normal'] });
+    targetWin = normals.find(w => w.focused) || normals[0];
+  }
+
+  if (!targetWin) {
+    setStatus("No normal browser window found.", false, true);
+    return;
+  }
+
+  chrome.tabs.query({ windowId: targetWin.id }, async (tabs) => {
     const titles = tabs.map(tab => tab.title);
     setStatus("Organizing tabs…", true);
 
@@ -94,17 +109,39 @@ organize_btn.addEventListener("click", async () => {
 
 // === Group Tabs Based on Categories ===
 async function organizeTabs(tabs, groups) {
+
+  const focusedWin = await chrome.windows.getLastFocused();
+  let targetWin = focusedWin;
+
+  if (focusedWin.type !== 'normal') {
+    // Fallback: pick any normal window
+    const normals = await chrome.windows.getAll({ windowTypes: ['normal'] });
+    targetWin = normals.find(w => w.focused) || normals[0];
+  }
+
+  if (!targetWin) {
+    setStatus("No normal browser window found.", false, true);
+    return;
+  }
+
+  // chrome.tabs.query({ windowId: targetWin.id }, async (tabs) => {
+
+
+
   for (const [groupName, titles] of Object.entries(groups)) {
     const tabIds = tabs
       .filter(tab => titles.includes(tab.title))
       .map(tab => tab.id);
 
     if (tabIds.length > 0) {
-      const groupId = await chrome.tabs.group({ tabIds });
+      const groupId = await chrome.tabs.group({
+      tabIds,
+      createProperties: { windowId: targetWin.id }
+    });
       await chrome.tabGroups.update(groupId, {
         title: groupName,
         color: getGroupColor(groupName),
-        collapsed: true,
+        collapsed: true
       });
     }
   }
@@ -131,6 +168,20 @@ async function generate_tabs(){
     body: JSON.stringify({ prompt }),
   });
 
+  const focusedWin = await chrome.windows.getLastFocused();
+  let targetWin = focusedWin;
+
+  if (focusedWin.type !== 'normal') {
+    // Fallback: pick any normal window
+    const normals = await chrome.windows.getAll({ windowTypes: ['normal'] });
+    targetWin = normals.find(w => w.focused) || normals[0];
+  }
+
+  if (!targetWin) {
+    setStatus("No normal browser window found.", false, true);
+    return;
+  }
+
 
   const data = JSON.parse(await response.json());
   console.log(data)
@@ -142,14 +193,14 @@ async function generate_tabs(){
 
   for (const tab of parsed) {
     if (tab.url) {
-      const newTab = await chrome.tabs.create({ url: tab.url, active: false });
+      const newTab = await chrome.tabs.create({ url: tab.url, active: false});
       newTabIds.push(newTab.id);
     }
   }
 
 
   if (newTabIds.length > 0) {
-    let groupId = await chrome.tabs.group({ tabIds: newTabIds });
+    let groupId = await chrome.tabs.group({ tabIds: newTabIds, createProperties: { windowId: targetWin.id } });
     await chrome.tabGroups.update(groupId, {
       title: group_name,
       color: getGroupColor(group_name),
@@ -157,7 +208,7 @@ async function generate_tabs(){
     });
   }
 
-  setStatusGenerate(`✅ Your tabs are saved in: ${group_name}`)
+  setStatusGenerate(`Your tabs are saved in: ${group_name}`)
 }
 
 // === Bind Events ===
@@ -196,3 +247,4 @@ function setPopupHeight(expand = false) {
   document.documentElement.style.height = targetHeight;
   document.body.style.height = targetHeight;
 }
+
